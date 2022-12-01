@@ -4,16 +4,17 @@ import { model, Schema } from "mongoose";
 
 const InfoSchema = new Schema(
   {
-    caso: {
+    reparacao: {
       //indicar que info será de ID
       type: Schema.Types.ObjectId,
       //setar a referência do ID
-      ref: "CorteIDHcaso"
+      ref: "Reparacoe"
     },
-    reparacao: {
+    texto_reparacao: {
       type: String,
     },
-    estado_cumprimento: {
+    tribunal: ",asd",
+    notificar_estado_cumprimento: {
       type: String,
       enum: [
         "Cumprida",
@@ -25,12 +26,7 @@ const InfoSchema = new Schema(
     resolucao_sup_declaratoria: {
       type: String
     },
-    infos_cumprimento:[
-      {
-        type: Schema.Types.ObjectId,
-        // ref: AQUI_INFOS
-      }
-    ]
+    
     
   },
   {

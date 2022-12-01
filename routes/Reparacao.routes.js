@@ -67,9 +67,10 @@ router.post("/create/:casoId", async (request, response) => {
 
 router.post("/create-all", async (request, response) => {
   try {
-    async function postAllReparacoes() {
+    // async function postAllReparacoes() {
       const postingReparacoes = await ReparacaoModel.insertMany(dataReparacoes);
-      await postingReparacoes.map(async (eachReparacao) => {
+      console.log(postingReparacoes.length,`Medidas de Reparação criadas! ✅✅✅`)
+      const creatingRefs = await postingReparacoes.forEach(async (eachReparacao) => {
         const casoCorrelato = await CasoCorteIDHModel.findOneAndUpdate(
           { caso: eachReparacao.nome_caso },
           { $push: { medidas_reparacao: eachReparacao._id } }
@@ -79,9 +80,9 @@ router.post("/create-all", async (request, response) => {
           { caso: casoCorrelato._id }
         );
       });
-    }
+    // }
 
-    return response.status(201).json(postAllReparacoes());
+    return response.status(201).json({notificacao: `${postingReparacoes.length} Medidas de Reparação criadas! ✅✅✅`});
   } catch (error) {
     console.log(error);
     return response.status(500).json({ msg: "Algo deu errado." });

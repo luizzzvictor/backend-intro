@@ -65,8 +65,9 @@ router.post("/create", async (request, response) => {
 router.post("/create-all", async (request, response) => {
   try {
     const postAllCasos = await CasoCorteIDHModel.insertMany(dataCasos);
+    console.log( postAllCasos.length,`Casos criados! ✅✅✅`)
 
-    return response.status(201).json(postAllCasos);
+    return response.status(201).json({notificacao: `${postAllCasos.length} Casos criados! ✅✅✅`});
   } catch (error) {
     console.log(error);
     return response.status(500).json({ msg: "Algo está errado" });
