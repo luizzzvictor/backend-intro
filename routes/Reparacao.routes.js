@@ -1,28 +1,20 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
-import CasoCorteIDHModel from "../models/casosCorteIDH.models.js";
+import ReparacaoModel from "../models/Reparacao.model.js";
 
 const router = express.Router();
 
 let data = [
   {
-    caso: "Ximenes Lopes",
-    tipo: "Caso Contencioso",
-    data_sentenca: "04/07/2006",
-    localidade: {
-      estado: "Ceará",
-      cidade: "Sobral",
-    },
-    vítimas: ["Damião Ximenes", "Albertina Lopes", "Irene Ximenes"],
-    em_tramitacao: false,
-    em_supervisao: true,
-    n_medidas_reparacao: 6,
+    reparacao: "Brasil deve promover cursos",
+    status_cumprimento: "Pendente de Cumprimento",
+    caso:"Ximenes Lopes"   
   },
 ];
 
 router.get("/", async (request, response) => {
   try {
-    const casos = await CasoCorteIDHModel.find();
+    const casos = await ReparacaoModel.find();
     return response.status(200).json(casos);
   } catch (error) {
     console.log(error);
@@ -33,7 +25,7 @@ router.get('/:id', async (request,response) => {
   try {
     const {id} = request.params
 
-    const caso = await CasoCorteIDHModel.findById(id)
+    const caso = await ReparacaoModel.findById(id)
 
     if (!caso) {
       return response.status(404).json("Usuário não foi encontrado!")
@@ -50,7 +42,7 @@ router.get('/:id', async (request,response) => {
 
 router.post("/create", async (request, response) => {
   try {
-    const newCaso = await CasoCorteIDHModel.create(request.body);
+    const newCaso = await ReparacaoModel.create(request.body);
 
     // modo antigo
     // const newData = {
@@ -72,7 +64,7 @@ router.put("/edit/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const update = await CasoCorteIDHModel.findByIdAndUpdate(
+    const update = await ReparacaoModel.findByIdAndUpdate(
       id,
       {
         ...request.body,
@@ -91,7 +83,7 @@ router.delete("/delete/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const deleteCaso = await CasoCorteIDHModel.findByIdAndDelete(id);
+    const deleteCaso = await ReparacaoModel.findByIdAndDelete(id);
 
     return response.status(200).json(deleteCaso);
   } catch (error) {
