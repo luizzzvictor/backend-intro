@@ -1,6 +1,8 @@
-import express from "express";
+import express, { json } from "express";
 import { v4 as uuidv4 } from "uuid";
+import CasoCorteIDHModel from "../models/casosCorteIDH.models.js";
 import ReparacaoModel from "../models/Reparacao.model.js";
+import dataReparacoes from "../data/reparacoes.json" assert { type: "json" };
 
 const router = express.Router();
 
@@ -8,55 +10,81 @@ let data = [
   {
     reparacao: "Brasil deve promover cursos",
     status_cumprimento: "Pendente de Cumprimento",
-    caso:"Ximenes Lopes"   
+    caso: ":_idXimenesLopes",
   },
 ];
 
 router.get("/", async (request, response) => {
   try {
     const casos = await ReparacaoModel.find();
+    // .populate("caso") para popular
     return response.status(200).json(casos);
   } catch (error) {
     console.log(error);
   }
 });
 
-router.get('/:id', async (request,response) => {
+router.get("/:id", async (request, response) => {
   try {
-    const {id} = request.params
+    const { id } = request.params;
 
-    const caso = await ReparacaoModel.findById(id)
+    const reparacao = await ReparacaoModel.findById(id);
 
-    if (!caso) {
-      return response.status(404).json("Usuário não foi encontrado!")
+    if (!reparacao) {
+      return response.status(404).json("Usuário não foi encontrado!");
     }
 
-    return response.status(200).json(caso)
-
+    return response.status(200).json(reparacao);
   } catch (error) {
-    console.log (error)
-    return response.status.apply(500).json({msg: "Algo está errado"})
+    console.log(error);
+    return response.status.apply(500).json({ msg: "Algo está errado" });
   }
-})
+});
 
-
-router.post("/create", async (request, response) => {
+// forma de passar o params relacionado a collection de casos principal
+router.post("/create/:casoId", async (request, response) => {
   try {
-    const newCaso = await ReparacaoModel.create(request.body);
+    const { casoId } = request.params;
 
-    // modo antigo
-    // const newData = {
-    //   ...request.body,
-    //   id: uuidv4(),
-    // };
-    // data.push(newData);
-    //modo antigo
+    // seto o campo 'caso' da Reparacao com o ID do CasoCorteIDH passado no params
+    const newReparacao = await ReparacaoModel.create({
+      ...request.body,
+      caso: casoId,
+    });
 
-    return response.status(201).json(newCaso);
+    // próxima etapa é dar um push no ID da nova repação no array de medidas de reparacao de cada caso.
+    await CasoCorteIDHModel.findByIdAndUpdate(casoId, {
+      $push: { medidas_reparacao: newReparacao._id },
+    });
+
+    return response.status(201).json(newReparacao);
   } catch (error) {
     console.log(error);
 
     return response.status(500).json({ msg: "Algo está errado." });
+  }
+});
+
+router.post("/create-all", async (request, response) => {
+  try {
+    async function postAllReparacoes() {
+      const postingReparacoes = await ReparacaoModel.insertMany(dataReparacoes);
+      await postingReparacoes.map(async (eachReparacao) => {
+        const casoCorrelato = await CasoCorteIDHModel.findOneAndUpdate(
+          { caso: eachReparacao.nome_caso },
+          { $push: { medidas_reparacao: eachReparacao._id } }
+        );
+        const updatingCasoIdNaReparacao = await ReparacaoModel.updateOne(
+          eachReparacao,
+          { caso: casoCorrelato._id }
+        );
+      });
+    }
+
+    return response.status(201).json(postAllReparacoes());
+  } catch (error) {
+    console.log(error);
+    return response.status(500).json({ msg: "Algo deu errado." });
   }
 });
 
@@ -83,9 +111,23 @@ router.delete("/delete/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const deleteCaso = await ReparacaoModel.findByIdAndDelete(id);
+    const deleteReparacao = await ReparacaoModel.findByIdAndDelete(id);
+    // complexo processo de deletar rs
+    await CasoCorteIDHModel.findByIdAndUpdate(deleteReparacao.caso, {
+      $pull: { medidas_reparacao: deleteReparacao._id },
+    });
 
-    return response.status(200).json(deleteCaso);
+    return response.status(200).json(deleteReparacao);
+  } catch (error) {
+    console.log(error);
+    return response.status(500).json({ msg: "Algo está errado" });
+  }
+});
+router.delete("/delete-all", async (request, response) => {
+  try {
+    const deleteAll = await ReparacaoModel.deleteMany();
+
+    return response.status(200).json(deleteAll);
   } catch (error) {
     console.log(error);
     return response.status(500).json({ msg: "Algo está errado" });

@@ -2,7 +2,7 @@ import { model, Schema } from "mongoose";
 
 // 1 para muitos, considerando os casos
 
-const ReparacaoSchema = new Schema(
+const InfoSchema = new Schema(
   {
     caso: {
       //indicar que info será de ID
@@ -10,7 +10,6 @@ const ReparacaoSchema = new Schema(
       //setar a referência do ID
       ref: "CorteIDHcaso"
     },
-    nome_caso: String,
     reparacao: {
       type: String,
     },
@@ -29,7 +28,7 @@ const ReparacaoSchema = new Schema(
     infos_cumprimento:[
       {
         type: Schema.Types.ObjectId,
-        ref: "Info"
+        // ref: AQUI_INFOS
       }
     ]
     
@@ -39,6 +38,6 @@ const ReparacaoSchema = new Schema(
   }
 );
 
-const ReparacaoModel = model("Reparacoe", ReparacaoSchema);
+const InfoModel = model("Info", InfoSchema);
 
-export default ReparacaoModel;
+export default InfoModel;

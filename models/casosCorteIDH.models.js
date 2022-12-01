@@ -2,40 +2,39 @@ import { model, Schema } from "mongoose";
 
 const casoCorteIDHSchema = new Schema(
   {
-    caso: {
-      type: String,
-      required: true,
-    },
-    tipo: {
+    tipo_de_decisao: {
       type: String,
       enum: ["Caso Contencioso", "Medidas Provisórias"],
     },
-    data_sentenca: {
-      type: Date,
-    },
+    caso: String,    
     localidade: {
       estado: { type: String },
       cidade: { type: String },
     },
-    vítimas: {
-        type: Array,
-    },
-    em_tramitacao: {
-      type: Boolean,
-    },
-    em_supervisao: {
-      type: Boolean,
-    },
-    n_medidas_reparacao: {
-        type: Number
-    },
+    latitude: Number,
+    longitude: Number,
+    imagem: String,
+    resumo_caso: String,
+    vítimas: String,
+    representantes: String,
+    palavras_chave: [String],
+    sentenca_lin: String,
+    link_portugues: String,
+    ordem_sentencas: Number,
+    cidh_peticao: Date,
+    cidh_admissibilidade: Date,
+    cidh_merito: Date,
+    cidh_submissao: Date,
+    corte_sentenca: Date,
+    em_supervisao:Boolean,
+    em_tramitacao: Boolean,
+    n_medidas_reparacao: Number,
     medidas_reparacao: [
       {
         type: Schema.Types.ObjectId,
         ref: "Reparacoe"
       }
     ]
-    //checar possibilidade de referência cruzada, array com todas as medidas de reparação
   },
   {
     timestamps: true,
