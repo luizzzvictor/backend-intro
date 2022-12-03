@@ -1,26 +1,10 @@
 import express from "express";
-import { v4 as uuidv4 } from "uuid";
 import CasoCorteIDHModel from "../models/casosCorteIDH.models.js";
 import ReparacaoModel from "../models/Reparacao.model.js";
 import dataCasos from "../data/casos.json" assert { type: "json" };
 
 const router = express.Router();
 
-let data = [
-  {
-    caso: "Ximenes Lopes",
-    tipo: "Caso Contencioso",
-    data_sentenca: "04/07/2006",
-    localidade: {
-      estado: "Ceará",
-      cidade: "Sobral",
-    },
-    vítimas: ["Damião Ximenes", "Albertina Lopes", "Irene Ximenes"],
-    em_tramitacao: false,
-    em_supervisao: true,
-    n_medidas_reparacao: 6,
-  },
-];
 
 router.get("/", async (request, response) => {
   try {
@@ -111,6 +95,7 @@ router.delete("/delete/:id", async (request, response) => {
 router.delete("/delete-all", async (request, response) => {
   try {
     const deleteAllCasos = await CasoCorteIDHModel.deleteMany();
+    console.log(deleteAllCasos.deletedCount,`Casos deletados! ❌❌❌`)
 
     return response.status(200).json(deleteAllCasos);
   } catch (error) {

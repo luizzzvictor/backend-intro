@@ -1,0 +1,17 @@
+###### https://json-generator.com/#  ########
+
+[
+  '{{repeat(25, 50)}}',
+  {
+     tribunal: function (tags) {
+      var fruits = ['TRF1', 'TRF2', 'TRF3', 'TRF4', 'TRF5','TJAC', 'TJAL', 'TJGO', 'TJPB','TJSP', 'TJAM', 'TJRJ', 'TJAP', 'TJMG', 'TJMA','TJCE','TJPI'];
+      return fruits[tags.integer(0, fruits.length - 1)];
+    },
+    unidade_judiciaria: function (tags) {
+      var unidades = ["Corregedoria do", "Presidência do", "Grupo de Monitoramento e Fiscalização do" ];
+      return unidades[tags.integer(0, unidades.length -1)] + " " + this.tribunal;
+    },
+    infos_relevantes: '{{lorem(1, "paragraphs")}}',
+    notificar_estado_cumprimento: '{{random("Pendente de cumprimento", "Cumprida", "Parcialmente cumprida", "Descumprida")}}'
+  }
+]

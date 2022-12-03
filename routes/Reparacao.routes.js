@@ -1,18 +1,11 @@
 import express, { json } from "express";
-import { v4 as uuidv4 } from "uuid";
 import CasoCorteIDHModel from "../models/casosCorteIDH.models.js";
 import ReparacaoModel from "../models/Reparacao.model.js";
 import dataReparacoes from "../data/reparacoes.json" assert { type: "json" };
 
 const router = express.Router();
 
-let data = [
-  {
-    reparacao: "Brasil deve promover cursos",
-    status_cumprimento: "Pendente de Cumprimento",
-    caso: ":_idXimenesLopes",
-  },
-];
+
 
 router.get("/", async (request, response) => {
   try {
@@ -28,7 +21,7 @@ router.get("/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const reparacao = await ReparacaoModel.findById(id);
+    const reparacao = await ReparacaoModel.findById(id).populate("infos_cumprimento", "infos_relevantes");
 
     if (!reparacao) {
       return response.status(404).json("Usuário não foi encontrado!");
@@ -127,8 +120,12 @@ router.delete("/delete/:id", async (request, response) => {
 router.delete("/delete-all", async (request, response) => {
   try {
     const deleteAll = await ReparacaoModel.deleteMany();
+    console.log(deleteAll.deletedCount,`Medidas de Reparação deletadas! ❌❌❌`)
+
+    await CasoCorteIDHModel.updateMany({}, {medidas_reparacao:[]})
 
     return response.status(200).json(deleteAll);
+
   } catch (error) {
     console.log(error);
     return response.status(500).json({ msg: "Algo está errado" });
