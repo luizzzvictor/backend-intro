@@ -38,6 +38,25 @@ infoRouter.post("/:reparacaoId", async (req, res) => {
   }
 });
 
+infoRouter.put("/edit/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const update = await InfoModel.findByIdAndUpdate(
+      id,
+      {
+        ...req.body,
+      },
+      { new: true, runValidators: true }
+    );
+
+    return res.status(200).json(update);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Algo está errado" });
+  }
+});
+
 infoRouter.post("/p/createManyInfos", async (req, res) => {
   try {
     const postingInfos = await InfoModel.insertMany(dataInfos);
