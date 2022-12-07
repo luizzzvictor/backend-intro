@@ -18,6 +18,23 @@ infoRouter.get("/", async (req, res) => {
   }
 });
 
+infoRouter.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const info = await InfoModel.findById(id).populate("reparacao", "reparacao");
+
+    if (!info) {
+      return res.status(404).json("Info não foi encontrada!");
+    }
+
+    return res.status(200).json(info);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Algo está errado" });
+  }
+});
+
 infoRouter.post("/:reparacaoId", async (req, res) => {
   try {
     const { reparacaoId } = req.params;

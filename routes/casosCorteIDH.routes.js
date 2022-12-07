@@ -28,7 +28,7 @@ router.get("/:id", async (request, response) => {
     );
 
     if (!caso) {
-      return response.status(404).json("Usuário não foi encontrado!");
+      return response.status(404).json("Caso não foi encontrado!");
     }
 
     return response.status(200).json(caso);

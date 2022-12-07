@@ -27,7 +27,7 @@ router.get("/:id", async (request, response) => {
     );
 
     if (!reparacao) {
-      return response.status(404).json("Usuário não foi encontrado!");
+      return response.status(404).json("Medida de Reparação não foi encontrada!");
     }
 
     return response.status(200).json(reparacao);
