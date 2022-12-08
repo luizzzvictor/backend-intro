@@ -89,13 +89,10 @@ router.post("/populateDB", async (req, res) => {
     const postingInfos = await InfoModel.insertMany(dataInfos);
     console.log(postingInfos.length, `Infos criadas! ✅✅✅`);
 
-    const creatingRefs2 = await postingInfos.forEach(async (eachInfo) => {
-      const gettingRandomReparacação = await ReparacaoModel.count().exec(
-        async function  (err, count) {
-          // pegando número random dentre as reparações
+    const creatingRefs2 = await postingInfos.forEach(async (eachInfo) => { 
+        
           var random = Math.floor(Math.random() * 85);
-          // console.log(random)
-          //
+         
           await ReparacaoModel.findOne()
             .skip(random)
             .exec(async function (err, result) {
@@ -103,9 +100,7 @@ router.post("/populateDB", async (req, res) => {
                 $push: { infos_cumprimento: eachInfo._id },
               });
               await InfoModel.updateOne(eachInfo, { reparacao: result._id });
-            });
-        }
-      );
+            });   
     });
     console.log(postingInfos.length, `Infos povoadas aleatoriamente! 👨‍👨‍👦`);
     console.log(`DB montada! 😎 `);
