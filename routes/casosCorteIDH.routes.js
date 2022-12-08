@@ -93,7 +93,7 @@ router.post("/populateDB", async (req, res) => {
         
           var random = Math.floor(Math.random() * 85);
          
-          await ReparacaoModel.find()
+          await ReparacaoModel.findOne()
             .skip(random)
             .exec(async function (err, result) {
               const reparacaoAleatoria = await result.updateOne({
@@ -102,6 +102,11 @@ router.post("/populateDB", async (req, res) => {
               await InfoModel.updateOne(eachInfo, { reparacao: result._id });
             });   
     });
+
+    const despair = await postingInfos.forEach(async (eachInfo) => {
+      console.log(`🤡🤡🤡`)
+    })
+
     console.log(postingInfos.length, `Infos povoadas aleatoriamente! 👨‍👨‍👦`);
     console.log(`DB montada! 😎 `);
 
