@@ -71,6 +71,7 @@ router.post("/create-all", async (request, response) => {
     );
     const creatingRefs = await postingReparacoes.forEach(
       async (eachReparacao) => {
+        console.log(eachReparacao)
         const casoCorrelato = await CasoCorteIDHModel.findOneAndUpdate(
           { caso: eachReparacao.nome_caso },
           { $push: { medidas_reparacao: eachReparacao._id } }
