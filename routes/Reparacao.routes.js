@@ -71,18 +71,17 @@ router.post("/create-all", async (request, response) => {
     );    
     
     const creatingRefs = await postingReparacoes.forEach(
-      async (eachReparacao) => {
-        
+      async (eachReparacao) => {        
         const casoCorrelato = await CasoCorteIDHModel.findOneAndUpdate(
           { caso: eachReparacao.nome_caso },
           { $push: { medidas_reparacao: eachReparacao._id } },
           {new:true}
         );
-        // const updatingCasoIdNaReparacao = await ReparacaoModel.findByIdAndUpdate(
-        //   eachReparacao._id,
-        //   { caso: casoCorrelato._id },
-        //   {new:true}
-        // );
+        const updatingCasoIdNaReparacao = await ReparacaoModel.findByIdAndUpdate(
+          eachReparacao._id,
+          { caso: casoCorrelato._id },
+          {new:true}
+        );
       }
     );
     

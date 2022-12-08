@@ -93,7 +93,7 @@ router.post("/populateDB", async (req, res) => {
         
           var random = Math.floor(Math.random() * 85);
          
-          await ReparacaoModel.findOne()
+          await ReparacaoModel.find()
             .skip(random)
             .exec(async function (err, result) {
               const reparacaoAleatoria = await result.updateOne({
