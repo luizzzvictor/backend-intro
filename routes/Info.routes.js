@@ -81,7 +81,7 @@ infoRouter.post("/p/createManyInfos", async (req, res) => {
 
     const creatingRefs = await postingInfos.forEach(async (eachInfo) => {      
         
-          var random = Math.floor(Math.random() * 85);
+          let random = Math.floor(Math.random() * 85);
           
           await ReparacaoModel.findOne()
             .skip(random)
