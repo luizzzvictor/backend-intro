@@ -84,11 +84,12 @@ infoRouter.post("/p/createManyInfos", async (req, res) => {
         function (err, count) {
           // pegando número random dentre as reparações
           var random = Math.floor(Math.random() * 85);
-          // console.log(random)
+          console.log(random)
           //
           ReparacaoModel.findOne()
             .skip(random)
             .exec(async function (err, result) {
+              // console.log(result)
               const reparacaoAleatoria = await result.updateOne({
                 $push: { infos_cumprimento: eachInfo._id },
               });
