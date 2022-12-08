@@ -81,13 +81,13 @@ infoRouter.post("/p/createManyInfos", async (req, res) => {
 
     const creatingRefs = await postingInfos.forEach(async (eachInfo) => {
       const gettingRandomReparacação = await ReparacaoModel.count().exec(
-        function (err, count) {
+        async function (err, count) {
           console.log(err)
           // pegando número random dentre as reparações
           var random = Math.floor(Math.random() * 85);
           console.log(random)
           //
-          ReparacaoModel.findOne()
+          await ReparacaoModel.findOne()
             .skip(random)
             .exec(async function (err, result) {
               // console.log(result)
