@@ -63,28 +63,35 @@ router.post("/create/:casoId", async (request, response) => {
 
 router.post("/create-all", async (request, response) => {
   try {
-    // async function postAllReparacoes() {
+    
     const postingReparacoes = await ReparacaoModel.insertMany(request.body);
     console.log(
       postingReparacoes.length,
       `Medidas de Reparação criadas! ✅✅✅`
     );
+
+    
+    
     const creatingRefs = await postingReparacoes.forEach(
       async (eachReparacao) => {
+
+        setTimeout(async () => {
+          const casoCorrelato = await CasoCorteIDHModel.findOneAndUpdate(
+            { caso: eachReparacao.nome_caso },
+            { $push: { medidas_reparacao: eachReparacao._id } },
+            {new:true}
+          );
+        },1000); // prints "one" after 2.5 seconds
+
         
-        const casoCorrelato = await CasoCorteIDHModel.findOneAndUpdate(
-          { caso: eachReparacao.nome_caso },
-          { $push: { medidas_reparacao: eachReparacao._id } },
-          {new:true}
-        );
-        const updatingCasoIdNaReparacao = await ReparacaoModel.findByIdAndUpdate(
-          eachReparacao._id,
-          { caso: casoCorrelato._id },
-          {new:true}
-        );
+        // const updatingCasoIdNaReparacao = await ReparacaoModel.findByIdAndUpdate(
+        //   eachReparacao._id,
+        //   { caso: casoCorrelato._id },
+        //   {new:true}
+        // );
       }
     );
-    // }
+    
 
     return response
       .status(201)
