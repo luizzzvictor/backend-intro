@@ -64,14 +64,14 @@ router.post("/create/:casoId", async (request, response) => {
 router.post("/create-all", async (request, response) => {
   try {
     // async function postAllReparacoes() {
-    const postingReparacoes = await ReparacaoModel.insertMany(dataReparacoes);
+    const postingReparacoes = await ReparacaoModel.insertMany(request.body);
     console.log(
       postingReparacoes.length,
       `Medidas de Reparação criadas! ✅✅✅`
     );
     const creatingRefs = await postingReparacoes.forEach(
       async (eachReparacao) => {
-        console.log(eachReparacao)
+        
         const casoCorrelato = await CasoCorteIDHModel.findOneAndUpdate(
           { caso: eachReparacao.nome_caso },
           { $push: { medidas_reparacao: eachReparacao._id } }
