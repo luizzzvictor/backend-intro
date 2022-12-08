@@ -91,12 +91,12 @@ router.post("/populateDB", async (req, res) => {
 
     const creatingRefs2 = await postingInfos.forEach(async (eachInfo) => {
       const gettingRandomReparacação = await ReparacaoModel.count().exec(
-        function (err, count) {
+        async function  (err, count) {
           // pegando número random dentre as reparações
           var random = Math.floor(Math.random() * 85);
           // console.log(random)
           //
-          ReparacaoModel.findOne()
+          await ReparacaoModel.findOne()
             .skip(random)
             .exec(async function (err, result) {
               const reparacaoAleatoria = await result.updateOne({
