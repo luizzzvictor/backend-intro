@@ -1,13 +1,13 @@
 import express from "express";
-import InfoModel from "../models/Info.model.js";
-import ReparacaoModel from "../models/Reparacao.model.js";
+import infoModel from "../models/info.model.js";
+import reparacaoModel from "../models/reparacao.model.js";
 import dataInfos from "../data/infos.json" assert { type: "json" };
 
 const infoRouter = express.Router();
 
 infoRouter.get("/", async (req, res) => {
   try {
-    const infos = await InfoModel.find().populate("reparacao", "reparacao");
+    const infos = await infoModel.find().populate("reparacao", "reparacao");
 
     console.log(infos.length, "Infos cadastradas!👁️");
 
@@ -22,7 +22,7 @@ infoRouter.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const info = await InfoModel.findById(id).populate("reparacao", "reparacao");
+    const info = await infoModel.findById(id).populate("reparacao", "reparacao");
 
     if (!info) {
       return res.status(404).json("Info não foi encontrada!");
@@ -39,12 +39,12 @@ infoRouter.post("/:reparacaoId", async (req, res) => {
   try {
     const { reparacaoId } = req.params;
 
-    const newInfo = await InfoModel.create({
+    const newInfo = await infoModel.create({
       ...req.body,
       reparacao: reparacaoId,
     });
     console.log(`Info sobre Medida de Reparação criada com sucesso! ✅✅✅`);
-    await ReparacaoModel.findByIdAndUpdate(reparacaoId, {
+    await reparacaoModel.findByIdAndUpdate(reparacaoId, {
       $push: { infos_cumprimento: newInfo._id },
     });
 
@@ -59,7 +59,7 @@ infoRouter.put("/edit/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const update = await InfoModel.findByIdAndUpdate(
+    const update = await infoModel.findByIdAndUpdate(
       id,
       {
         ...req.body,
@@ -76,21 +76,21 @@ infoRouter.put("/edit/:id", async (req, res) => {
 
 infoRouter.post("/p/createManyInfos", async (req, res) => {
   try {
-    const postingInfos = await InfoModel.insertMany(dataInfos);
+    const postingInfos = await infoModel.insertMany(dataInfos);
     console.log(postingInfos.length, `Infos criadas! ✅✅✅`);
 
     const creatingRefs = await postingInfos.forEach(async (eachInfo) => {      
         
           let random = Math.floor(Math.random() * 85);
           
-          await ReparacaoModel.findOne()
+          await reparacaoModel.findOne()
             .skip(random)
             .exec(async function (err, result) {
               // console.log(result)
               const reparacaoAleatoria = await result.updateOne({
                 $push: { infos_cumprimento: eachInfo._id },
               });
-              await InfoModel.updateOne(eachInfo, { reparacao: result._id });
+              await infoModel.updateOne(eachInfo, { reparacao: result._id });
             });     
     });
     console.log(postingInfos.length, `Infos povoadas aleatoriamente! 👨‍👨‍👦`);
@@ -106,9 +106,9 @@ infoRouter.delete("/:infoId", async (req, res) => {
   try {
     const { infoId } = req.params;
 
-    const deleteInfo = await InfoModel.findByIdAndDelete(infoId);
+    const deleteInfo = await infoModel.findByIdAndDelete(infoId);
 
-    await ReparacaoModel.findByIdAndUpdate(deleteInfo.reparacao, {
+    await reparacaoModel.findByIdAndUpdate(deleteInfo.reparacao, {
       $pull: { infos_cumprimento: infoId },
     });
 
@@ -122,10 +122,10 @@ export default infoRouter;
 
 infoRouter.delete("/d/delete-all", async (request, response) => {
   try {
-    const deleteAllInfos = await InfoModel.deleteMany();
+    const deleteAllInfos = await infoModel.deleteMany();
     console.log(deleteAllInfos.deletedCount, `Infos deletadas! ❌❌❌`);
 
-    await ReparacaoModel.updateMany({}, { infos_cumprimento: [] });
+    await reparacaoModel.updateMany({}, { infos_cumprimento: [] });
 
     return response.status(200).json(deleteAll);
   } catch (error) {

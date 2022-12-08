@@ -2,8 +2,8 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import casosCorteIDHRouter from './routes/casosCorteIDH.routes.js'
-import ReparacaoRouter from './routes/reparacao.routes.js'
-import InfoRouter from './routes/info.routes.js'
+import reparacaoRouter from './routes/reparacao.routes.js'
+import infoRouter from './routes/info.routes.js'
 import dbConnection from './config/db.config.js'
 import cors from "cors"
 
@@ -24,8 +24,8 @@ app.use(express.json());
 
 
 app.use('/casosCorteIDH', casosCorteIDHRouter)
-app.use('/reparacao', ReparacaoRouter)
-app.use('/info', InfoRouter)
+app.use('/reparacao', reparacaoRouter)
+app.use('/info', infoRouter)
 
 // servidor subindo pro ar
 app.listen(process.env.PORT, ()=> console.log("Server on Port 8080."))

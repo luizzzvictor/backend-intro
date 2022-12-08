@@ -1,14 +1,13 @@
 import express, { json } from "express";
-import CasoCorteIDHModel from "../models/casosCorteIDH.models.js";
-import ReparacaoModel from "../models/Reparacao.model.js";
+import casoCorteIDHModel from "../models/casosCorteIDH.models.js";
+import reparacaoModel from "../models/reparacao.model.js";
 import dataReparacoes from "../data/reparacoes.json" assert { type: "json" };
-import InfoModel from "../models/Info.model.js";
 
 const router = express.Router();
 
 router.get("/", async (request, response) => {
   try {
-    const reparacoes = await ReparacaoModel.find().populate("caso", "caso");
+    const reparacoes = await reparacaoModel.find().populate("caso", "caso");
     console.log(reparacoes.length, "Reparações cadastradas!👁️");
     // .populate("caso") para popular
     return response.status(200).json(reparacoes);
@@ -21,7 +20,7 @@ router.get("/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const reparacao = await ReparacaoModel.findById(id).populate(
+    const reparacao = await reparacaoModel.findById(id).populate(
       "infos_cumprimento",
       "infos_relevantes"
     );
@@ -43,13 +42,13 @@ router.post("/create/:casoId", async (request, response) => {
     const { casoId } = request.params;
 
     // seto o campo 'caso' da Reparacao com o ID do CasoCorteIDH passado no params
-    const newReparacao = await ReparacaoModel.create({
+    const newReparacao = await reparacaoModel.create({
       ...request.body,
       caso: casoId,
     });
 
     // próxima etapa é dar um push no ID da nova repação no array de medidas de reparacao de cada caso.
-    await CasoCorteIDHModel.findByIdAndUpdate(casoId, {
+    await casoCorteIDHModel.findByIdAndUpdate(casoId, {
       $push: { medidas_reparacao: newReparacao._id },
     });
 
@@ -64,7 +63,7 @@ router.post("/create/:casoId", async (request, response) => {
 router.post("/create-all", async (request, response) => {
   try {
     
-    const postingReparacoes = await ReparacaoModel.insertMany(dataReparacoes);
+    const postingReparacoes = await reparacaoModel.insertMany(dataReparacoes);
     console.log(
       postingReparacoes.length,
       `Medidas de Reparação criadas! ✅✅✅`
@@ -75,13 +74,13 @@ router.post("/create-all", async (request, response) => {
 
         try {
           // console.log(eachReparacao)        
-          const casoCorrelato = await CasoCorteIDHModel.findOneAndUpdate(
+          const casoCorrelato = await casoCorteIDHModel.findOneAndUpdate(
             { caso: eachReparacao.nome_caso },
             { $push: { medidas_reparacao: eachReparacao._id } },
             {new:true}
           );
           // console.log(casoCorrelato)
-          const updatingCasoIdNaReparacao = await ReparacaoModel.findByIdAndUpdate(
+          const updatingCasoIdNaReparacao = await reparacaoModel.findByIdAndUpdate(
             eachReparacao._id,
             { caso: casoCorrelato._id },
             {new:true}
@@ -109,7 +108,7 @@ router.put("/edit/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const update = await ReparacaoModel.findByIdAndUpdate(
+    const update = await reparacaoModel.findByIdAndUpdate(
       id,
       {
         ...request.body,
@@ -128,9 +127,9 @@ router.delete("/delete/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const deleteReparacao = await ReparacaoModel.findByIdAndDelete(id);
+    const deleteReparacao = await reparacaoModel.findByIdAndDelete(id);
     // complexo processo de deletar rs
-    await CasoCorteIDHModel.findByIdAndUpdate(deleteReparacao.caso, {
+    await casoCorteIDHModel.findByIdAndUpdate(deleteReparacao.caso, {
       $pull: { medidas_reparacao: deleteReparacao._id },
     });
 
@@ -142,14 +141,13 @@ router.delete("/delete/:id", async (request, response) => {
 });
 router.delete("/delete-all", async (request, response) => {
   try {
-    const deleteAll = await ReparacaoModel.deleteMany();
+    const deleteAll = await reparacaoModel.deleteMany();
     console.log(
       deleteAll.deletedCount,
       `Medidas de Reparação deletadas! ❌❌❌`
     );
 
-    await CasoCorteIDHModel.updateMany({}, { medidas_reparacao: [] });
-    // await InfoModel.deleteMany()
+    await casoCorteIDHModel.updateMany({}, { medidas_reparacao: [] });
 
     return response.status(200).json(deleteAll);
   } catch (error) {

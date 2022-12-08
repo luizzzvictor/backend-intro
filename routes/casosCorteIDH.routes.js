@@ -1,7 +1,7 @@
 import express from "express";
-import CasoCorteIDHModel from "../models/casosCorteIDH.models.js";
-import ReparacaoModel from "../models/Reparacao.model.js";
-import InfoModel from "../models/Info.model.js";
+import casoCorteIDHModel from "../models/casosCorteIDH.models.js";
+import reparacaoModel from "../models/reparacao.model.js";
+import infoModel from "../models/info.model.js";
 import dataCasos from "../data/casos.json" assert { type: "json" };
 import dataReparacoes from "../data/reparacoes.json" assert { type: "json" };
 import dataInfos from "../data/infos.json" assert { type: "json" };
@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get("/", async (request, response) => {
   try {
-    const casos = await CasoCorteIDHModel.find().populate("medidas_reparacao");
+    const casos = await casoCorteIDHModel.find().populate("medidas_reparacao");
     console.log(casos.length, "Casos cadastrados!👁️");
 
     return response.status(200).json(casos);
@@ -23,7 +23,7 @@ router.get("/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const caso = await CasoCorteIDHModel.findById(id).populate(
+    const caso = await casoCorteIDHModel.findById(id).populate(
       "medidas_reparacao"
     );
 
@@ -40,7 +40,7 @@ router.get("/:id", async (request, response) => {
 
 router.post("/create", async (request, response) => {
   try {
-    const newCaso = await CasoCorteIDHModel.create(request.body);
+    const newCaso = await casoCorteIDHModel.create(request.body);
 
     return response.status(201).json(newCaso);
   } catch (error) {
@@ -52,7 +52,7 @@ router.post("/create", async (request, response) => {
 
 router.post("/create-all", async (request, response) => {
   try {
-    const postAllCasos = await CasoCorteIDHModel.insertMany(dataCasos);
+    const postAllCasos = await casoCorteIDHModel.insertMany(dataCasos);
     console.log(postAllCasos.length, `Casos criados! ✅✅✅`);
 
     return response
@@ -66,27 +66,27 @@ router.post("/create-all", async (request, response) => {
 
 router.post("/populateDB", async (req, res) => {
   try {
-    const postAllCasos = await CasoCorteIDHModel.insertMany(dataCasos);
+    const postAllCasos = await casoCorteIDHModel.insertMany(dataCasos);
     console.log(postAllCasos.length, `Casos criados! ✅✅✅`);
 
-    const postingReparacoes = await ReparacaoModel.insertMany(dataReparacoes);
+    const postingReparacoes = await reparacaoModel.insertMany(dataReparacoes);
     console.log(
       postingReparacoes.length,
       `Medidas de Reparação criadas! ✅✅✅`
     );
     const creatingRefs = await postingReparacoes.forEach(
       async (eachReparacao) => {
-        const casoCorrelato = await CasoCorteIDHModel.findOneAndUpdate(
+        const casoCorrelato = await casoCorteIDHModel.findOneAndUpdate(
           { caso: eachReparacao.nome_caso },
           { $push: { medidas_reparacao: eachReparacao._id } }
         );
-        const updatingCasoIdNaReparacao = await ReparacaoModel.updateOne(
+        const updatingCasoIdNaReparacao = await reparacaoModel.updateOne(
           eachReparacao,
           { caso: casoCorrelato._id }
         );
       }
     );
-    const postingInfos = await InfoModel.insertMany(dataInfos);
+    const postingInfos = await infoModel.insertMany(dataInfos);
     console.log(postingInfos.length, `Infos criadas! ✅✅✅`);
 
     const creatingRefs2 = await postingInfos.forEach(async (eachInfo) => { 
@@ -94,14 +94,14 @@ router.post("/populateDB", async (req, res) => {
           var random = Math.floor(Math.random() * 85);
           // console.log(random)
          
-          await ReparacaoModel.findOne()
+          await reparacaoModel.findOne()
             .skip(random)
             .exec(async function (err, result) {
               const reparacaoAleatoria = await result.updateOne({
                 $push: { infos_cumprimento: eachInfo._id },
               });
               console.log(reparacaoAleatoria)
-              await InfoModel.updateOne(eachInfo, { reparacao: result._id });
+              await infoModel.updateOne(eachInfo, { reparacao: result._id });
             });   
     });
 
@@ -123,7 +123,7 @@ router.put("/edit/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const update = await CasoCorteIDHModel.findByIdAndUpdate(
+    const update = await casoCorteIDHModel.findByIdAndUpdate(
       id,
       {
         ...request.body,
@@ -142,9 +142,9 @@ router.delete("/delete/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const deleteCaso = await CasoCorteIDHModel.findByIdAndDelete(id);
+    const deleteCaso = await casoCorteIDHModel.findByIdAndDelete(id);
 
-    await ReparacaoModel.deleteMany({ caso: id });
+    await reparacaoModel.deleteMany({ caso: id });
 
     return response.status(200).json(deleteCaso);
   } catch (error) {
@@ -155,7 +155,7 @@ router.delete("/delete/:id", async (request, response) => {
 
 router.delete("/delete-all", async (request, response) => {
   try {
-    const deleteAllCasos = await CasoCorteIDHModel.deleteMany();
+    const deleteAllCasos = await casoCorteIDHModel.deleteMany();
     console.log(deleteAllCasos.deletedCount, `Casos deletados! ❌❌❌`);
 
     return response.status(200).json(deleteAllCasos);
@@ -167,16 +167,16 @@ router.delete("/delete-all", async (request, response) => {
 
 router.delete("/zerarDB", async (request, response) => {
   try {
-    const deleteAllCasos = await CasoCorteIDHModel.deleteMany();
+    const deleteAllCasos = await casoCorteIDHModel.deleteMany();
     console.log(deleteAllCasos.deletedCount, `Casos deletados! ❌❌❌`);
 
-    const deleteAllReparacoes = await ReparacaoModel.deleteMany();
+    const deleteAllReparacoes = await reparacaoModel.deleteMany();
     console.log(
       deleteAllReparacoes.deletedCount,
       `Medidas de Reparação deletadas! ❌❌❌`
     );
 
-    const deleteAllInfos = await InfoModel.deleteMany();
+    const deleteAllInfos = await infoModel.deleteMany();
     console.log(deleteAllInfos.deletedCount, `Infos deletadas! ❌❌❌`);
 
     console.log(`DB Zerada! 💀 `);
