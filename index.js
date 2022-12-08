@@ -2,9 +2,10 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import casosCorteIDHRouter from './routes/casosCorteIDH.routes.js'
-import ReparacaoRouter from './routes/Reparacao.routes.js'
-import InfoRouter from './routes/Info.routes.js'
+import ReparacaoRouter from './routes/reparacao.routes.js'
+import InfoRouter from './routes/info.routes.js'
 import dbConnection from './config/db.config.js'
+import cors from "cors"
 
 
 
@@ -15,6 +16,8 @@ dbConnection()
 
 // instanciar a variável que vai ficar responsável pelo nosso servidor -> app
 const app = express();
+
+app.use(cors())
 
 // configurar o servidor para aceitar enviar e receber arquivos JSON
 app.use(express.json());

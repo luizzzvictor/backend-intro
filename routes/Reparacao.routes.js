@@ -64,7 +64,7 @@ router.post("/create/:casoId", async (request, response) => {
 router.post("/create-all", async (request, response) => {
   try {
     
-    const postingReparacoes = await ReparacaoModel.insertMany(request.body);
+    const postingReparacoes = await ReparacaoModel.insertMany(dataReparacoes);
     console.log(
       postingReparacoes.length,
       `Medidas de Reparação criadas! ✅✅✅`
@@ -72,18 +72,24 @@ router.post("/create-all", async (request, response) => {
     
     const creatingRefs = await postingReparacoes.forEach(
       async (eachReparacao) => {
-        console.log(eachReparacao)        
-        const casoCorrelato = await CasoCorteIDHModel.findOneAndUpdate(
-          { caso: eachReparacao.nome_caso },
-          { $push: { medidas_reparacao: eachReparacao._id } },
-          {new:true}
-        );
-        console.log(casoCorrelato)
-        const updatingCasoIdNaReparacao = await ReparacaoModel.findByIdAndUpdate(
-          eachReparacao._id,
-          { caso: casoCorrelato._id },
-          {new:true}
-        );
+
+        try {
+          // console.log(eachReparacao)        
+          const casoCorrelato = await CasoCorteIDHModel.findOneAndUpdate(
+            { caso: eachReparacao.nome_caso },
+            { $push: { medidas_reparacao: eachReparacao._id } },
+            {new:true}
+          );
+          // console.log(casoCorrelato)
+          const updatingCasoIdNaReparacao = await ReparacaoModel.findByIdAndUpdate(
+            eachReparacao._id,
+            { caso: casoCorrelato._id },
+            {new:true}
+          );
+
+        } catch(error) {
+          console.log(error)
+        }
       }
     );
     
