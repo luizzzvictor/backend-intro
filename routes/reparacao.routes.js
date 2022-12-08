@@ -105,12 +105,13 @@ router.post("/create-all", async (request, response) => {
                 { new: true }
               );
 
-              await Promise.all(creatingRefs)
+              
           } catch (error) {
             console.log(error);
           }
         }
       );
+      await Promise.all(creatingRefs)
     }
 
     atualizarCampos()
