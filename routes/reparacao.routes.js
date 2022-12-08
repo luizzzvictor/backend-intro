@@ -69,7 +69,24 @@ router.post("/create-all", async (request, response) => {
       `Medidas de Reparação criadas! ✅✅✅`
     );
 
-    // for(let i=0; i<postingReparacoes.length-1; i++) {
+    for(let eachReparacao of postingReparacoes) {
+      async function criarRefs() {
+        const casoCorrelato = await casoCorteIDHModel.findOneAndUpdate(
+          { caso: eachReparacao.nome_caso },
+          { $push: { medidas_reparacao: eachReparacao._id } },
+          {new:true}
+        );
+        const updatingCasoIdNaReparacao = await reparacaoModel.findByIdAndUpdate(
+          eachReparacao._id,
+          { caso: casoCorrelato._id },
+          {new:true}
+        );
+
+      }
+      criarRefs()
+    }
+    
+    // (let i=0; i<postingReparacoes.length-1; i++) {
     //   console.log(postingReparacoes[i].nome_caso)
     //   async function criarRefs() {
     //     const casoCorrelato = await casoCorteIDHModel.findOneAndUpdate(
@@ -87,34 +104,34 @@ router.post("/create-all", async (request, response) => {
     //   criarRefs()
     // }
 
-    async function atualizarCampos() {
-      const creatingRefs = await postingReparacoes.map(
-        async (eachReparacao) => {
-          try {
-            // console.log(eachReparacao)
-            const casoCorrelato = await casoCorteIDHModel.findOneAndUpdate(
-              { caso: eachReparacao.nome_caso },
-              { $push: { medidas_reparacao: eachReparacao._id } },
-              { new: true }
-            );
-            // console.log(casoCorrelato)
-            const updatingCasoIdNaReparacao =
-              await reparacaoModel.findByIdAndUpdate(
-                eachReparacao._id,
-                { caso: casoCorrelato._id },
-                { new: true }
-              );
+    // async function atualizarCampos() {
+    //   const creatingRefs = await postingReparacoes.map(
+    //     async (eachReparacao) => {
+    //       try {
+    //         // console.log(eachReparacao)
+    //         const casoCorrelato = await casoCorteIDHModel.findOneAndUpdate(
+    //           { caso: eachReparacao.nome_caso },
+    //           { $push: { medidas_reparacao: eachReparacao._id } },
+    //           { new: true }
+    //         );
+    //         // console.log(casoCorrelato)
+    //         const updatingCasoIdNaReparacao =
+    //           await reparacaoModel.findByIdAndUpdate(
+    //             eachReparacao._id,
+    //             { caso: casoCorrelato._id },
+    //             { new: true }
+    //           );
 
               
-          } catch (error) {
-            console.log(error);
-          }
-        }
-      );
-      await Promise.all(creatingRefs)
-    }
+    //       } catch (error) {
+    //         console.log(error);
+    //       }
+    //     }
+    //   );
+    //   await Promise.all(creatingRefs)
+    // }
 
-    atualizarCampos()
+    // atualizarCampos()
 
     
     return response.status(201).json({
