@@ -92,7 +92,7 @@ router.post("/populateDB", async (req, res) => {
     const creatingRefs2 = await postingInfos.forEach(async (eachInfo) => { 
         
           var random = Math.floor(Math.random() * 85);
-          console.log(random)
+          // console.log(random)
          
           await ReparacaoModel.findOne()
             .skip(random)
@@ -100,6 +100,7 @@ router.post("/populateDB", async (req, res) => {
               const reparacaoAleatoria = await result.updateOne({
                 $push: { infos_cumprimento: eachInfo._id },
               });
+              console.log(reparacaoAleatoria)
               await InfoModel.updateOne(eachInfo, { reparacao: result._id });
             });   
     });
