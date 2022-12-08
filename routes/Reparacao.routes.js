@@ -74,11 +74,13 @@ router.post("/create-all", async (request, response) => {
         
         const casoCorrelato = await CasoCorteIDHModel.findOneAndUpdate(
           { caso: eachReparacao.nome_caso },
-          { $push: { medidas_reparacao: eachReparacao._id } }
+          { $push: { medidas_reparacao: eachReparacao._id } },
+          {new:true}
         );
-        const updatingCasoIdNaReparacao = await ReparacaoModel.updateOne(
-          eachReparacao,
-          { caso: casoCorrelato._id }
+        const updatingCasoIdNaReparacao = await ReparacaoModel.findByIdAndUpdate(
+          eachReparacao._id,
+          { caso: casoCorrelato._id },
+          {new:true}
         );
       }
     );
