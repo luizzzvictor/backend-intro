@@ -110,7 +110,7 @@ router.post("/populateDB", async (req, res) => {
 
     return res
       .status(201)
-      .json({ notificacao: `DB montada! 💨💨💨` });
+      .json({ notificacao: `DB montada! 💨💨💨 :DDDDDDDD-TESTE-FLY.IO` });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "Algo está errado" });
