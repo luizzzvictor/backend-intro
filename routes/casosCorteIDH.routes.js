@@ -23,9 +23,9 @@ router.get("/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const caso = await casoCorteIDHModel.findById(id).populate(
-      "medidas_reparacao"
-    );
+    const caso = await casoCorteIDHModel
+      .findById(id)
+      .populate("medidas_reparacao");
 
     if (!caso) {
       return response.status(404).json("Caso não foi encontrado!");
@@ -89,30 +89,28 @@ router.post("/populateDB", async (req, res) => {
     const postingInfos = await infoModel.insertMany(dataInfos);
     console.log(postingInfos.length, `Infos criadas! ✅✅✅`);
 
-    const creatingRefs2 = await postingInfos.forEach(async (eachInfo) => { 
-        
-          var random = Math.floor(Math.random() * 85);
-          // console.log(random)
-         
-          await reparacaoModel.findOne()
-            .skip(random)
-            .exec(async function (err, result) {
-              const reparacaoAleatoria = await result.updateOne({
-                $push: { infos_cumprimento: eachInfo._id },
-              });
-              console.log(reparacaoAleatoria)
-              await infoModel.updateOne(eachInfo, { reparacao: result._id });
-            });   
-    });
+    const creatingRefs2 = await postingInfos.forEach(async (eachInfo) => {
+      var random = Math.floor(Math.random() * 85);
+      // console.log(random)
 
-    // const despair = await postingInfos.forEach(async (eachInfo) => {
-    //   console.log(`🤡🤡🤡`)
-    // })
+      await reparacaoModel
+        .findOne()
+        .skip(random)
+        .exec(async function (err, result) {
+          const reparacaoAleatoria = await result.updateOne({
+            $push: { infos_cumprimento: eachInfo._id },
+          });
+          console.log(reparacaoAleatoria);
+          await infoModel.updateOne(eachInfo, { reparacao: result._id });
+        });
+    });
 
     console.log(postingInfos.length, `Infos povoadas aleatoriamente! 👨‍👨‍👦`);
     console.log(`DB montada! 😎 `);
 
-    return res.status(201).json({ notificacao: `DB montada! 💨💨💨 ` });
+    return res
+      .status(201)
+      .json({ notificacao: `DB montada! 💨💨💨` });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "Algo está errado" });
