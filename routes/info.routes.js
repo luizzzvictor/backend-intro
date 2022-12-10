@@ -67,6 +67,9 @@ infoRouter.put("/edit/:id", async (req, res) => {
       { new: true, runValidators: true }
     );
 
+    console.log(`Informação💡`,update._id, `💡 editada com sucesso! 📝📝📝 `)
+
+
     return res.status(200).json(update);
   } catch (error) {
     console.log(error);

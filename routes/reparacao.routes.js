@@ -87,51 +87,6 @@ router.post("/create-all", async (request, response) => {
       criarRefs();
     }
 
-    // (let i=0; i<postingReparacoes.length-1; i++) {
-    //   console.log(postingReparacoes[i].nome_caso)
-    //   async function criarRefs() {
-    //     const casoCorrelato = await casoCorteIDHModel.findOneAndUpdate(
-    //       { caso: postingReparacoes[i].nome_caso },
-    //       { $push: { medidas_reparacao: postingReparacoes[i]._id } },
-    //       {new:true}
-    //     );
-    //     const updatingCasoIdNaReparacao = await reparacaoModel.findByIdAndUpdate(
-    //       postingReparacoes[i]._id,
-    //       { caso: casoCorrelato._id },
-    //       {new:true}
-    //     );
-
-    //   }
-    //   criarRefs()
-    // }
-
-    // async function atualizarCampos() {
-    //   const creatingRefs = await postingReparacoes.map(
-    //     async (eachReparacao) => {
-    //       try {
-    //         // console.log(eachReparacao)
-    //         const casoCorrelato = await casoCorteIDHModel.findOneAndUpdate(
-    //           { caso: eachReparacao.nome_caso },
-    //           { $push: { medidas_reparacao: eachReparacao._id } },
-    //           { new: true }
-    //         );
-    //         // console.log(casoCorrelato)
-    //         const updatingCasoIdNaReparacao =
-    //           await reparacaoModel.findByIdAndUpdate(
-    //             eachReparacao._id,
-    //             { caso: casoCorrelato._id },
-    //             { new: true }
-    //           );
-
-    //       } catch (error) {
-    //         console.log(error);
-    //       }
-    //     }
-    //   );
-    //   await Promise.all(creatingRefs)
-    // }
-
-    // atualizarCampos()
 
     return response.status(201).json({
       notificacao: `${postingReparacoes.length} Medidas de Reparação criadas! ✅✅✅`,
@@ -153,6 +108,9 @@ router.put("/edit/:id", async (request, response) => {
       },
       { new: true, runValidators: true }
     );
+
+    console.log(`Medida de Reparação 💡`,update._id, `💡 editada com sucesso! 📝📝📝 `)
+
 
     return response.status(200).json(update);
   } catch (error) {

@@ -124,6 +124,9 @@ router.put("/edit/:id", async (request, response) => {
       },
       { new: true, runValidators: true }
     );
+    
+    console.log(`💡`,update.caso, `💡 editado com sucesso! 📝📝📝 `)
+
 
     return response.status(200).json(update);
   } catch (error) {
