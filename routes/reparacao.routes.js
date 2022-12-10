@@ -2,6 +2,7 @@ import express, { json } from "express";
 import casoCorteIDHModel from "../models/casosCorteIDH.models.js";
 import reparacaoModel from "../models/reparacao.model.js";
 import dataReparacoes from "../data/reparacoes.json" assert { type: "json" };
+import infoModel from "../models/info.model.js";
 
 const router = express.Router();
 
@@ -69,23 +70,23 @@ router.post("/create-all", async (request, response) => {
       `Medidas de Reparação criadas! ✅✅✅`
     );
 
-    for(let eachReparacao of postingReparacoes) {
+    for (let eachReparacao of postingReparacoes) {
       async function criarRefs() {
         const casoCorrelato = await casoCorteIDHModel.findOneAndUpdate(
           { caso: eachReparacao.nome_caso },
           { $push: { medidas_reparacao: eachReparacao._id } },
-          {new:true}
+          { new: true }
         );
-        const updatingCasoIdNaReparacao = await reparacaoModel.findByIdAndUpdate(
-          eachReparacao._id,
-          { caso: casoCorrelato._id },
-          {new:true}
-        );
-
+        const updatingCasoIdNaReparacao =
+          await reparacaoModel.findByIdAndUpdate(
+            eachReparacao._id,
+            { caso: casoCorrelato._id },
+            { new: true }
+          );
       }
-      criarRefs()
+      criarRefs();
     }
-    
+
     // (let i=0; i<postingReparacoes.length-1; i++) {
     //   console.log(postingReparacoes[i].nome_caso)
     //   async function criarRefs() {
@@ -122,7 +123,6 @@ router.post("/create-all", async (request, response) => {
     //             { new: true }
     //           );
 
-              
     //       } catch (error) {
     //         console.log(error);
     //       }
@@ -133,7 +133,6 @@ router.post("/create-all", async (request, response) => {
 
     // atualizarCampos()
 
-    
     return response.status(201).json({
       notificacao: `${postingReparacoes.length} Medidas de Reparação criadas! ✅✅✅`,
     });
@@ -167,10 +166,28 @@ router.delete("/delete/:id", async (request, response) => {
     const { id } = request.params;
 
     const deleteReparacao = await reparacaoModel.findByIdAndDelete(id);
-    // complexo processo de deletar rs
+
+    console.log(deleteReparacao)
+
+    let countInfosDeletadas = 0;
+
+    await deleteReparacao.infos_cumprimento.map(async (eachInfo) => {
+      await infoModel.findByIdAndDelete(eachInfo);
+      countInfosDeletadas++;
+    });
+
     await casoCorteIDHModel.findByIdAndUpdate(deleteReparacao.caso, {
       $pull: { medidas_reparacao: deleteReparacao._id },
     });
+
+    console.log(
+      `Reparação id:`,
+      deleteReparacao._id,
+      `deletada! ❌❌❌`,
+      "\n",
+      countInfosDeletadas,
+      `info(s) associadas deletada(s)!❌❌❌`
+    );
 
     return response.status(200).json(deleteReparacao);
   } catch (error) {

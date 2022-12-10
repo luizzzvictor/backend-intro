@@ -86,7 +86,6 @@ infoRouter.post("/p/createManyInfos", async (req, res) => {
           await reparacaoModel.findOne()
             .skip(random)
             .exec(async function (err, result) {
-              // console.log(result)
               const reparacaoAleatoria = await result.updateOne({
                 $push: { infos_cumprimento: eachInfo._id },
               });
@@ -111,6 +110,11 @@ infoRouter.delete("/:infoId", async (req, res) => {
     await reparacaoModel.findByIdAndUpdate(deleteInfo.reparacao, {
       $pull: { infos_cumprimento: infoId },
     });
+
+    console.log( `Info id:`,
+    deleteInfo._id,
+    `deletada! ❌❌❌`
+  );
 
     return res.status(200).json(deleteInfo);
   } catch (error) {

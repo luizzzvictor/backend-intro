@@ -90,8 +90,7 @@ router.post("/populateDB", async (req, res) => {
     console.log(postingInfos.length, `Infos criadas! ✅✅✅`);
 
     const creatingRefs2 = await postingInfos.forEach(async (eachInfo) => {
-      var random = Math.floor(Math.random() * 85);
-      // console.log(random)
+      let random = Math.floor(Math.random() * 85);
 
       await reparacaoModel
         .findOne()
@@ -100,7 +99,6 @@ router.post("/populateDB", async (req, res) => {
           const reparacaoAleatoria = await result.updateOne({
             $push: { infos_cumprimento: eachInfo._id },
           });
-          console.log(reparacaoAleatoria);
           await infoModel.updateOne(eachInfo, { reparacao: result._id });
         });
     });
@@ -108,9 +106,7 @@ router.post("/populateDB", async (req, res) => {
     console.log(postingInfos.length, `Infos povoadas aleatoriamente! 👨‍👨‍👦`);
     console.log(`DB montada! 😎 `);
 
-    return res
-      .status(201)
-      .json({ notificacao: `DB montada! 💨💨💨 :DDDDDDDD-TESTE-FLY.IO` });
+    return res.status(201).json({ notificacao: `DB montada! 💨💨💨` });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "Algo está errado" });
@@ -142,7 +138,30 @@ router.delete("/delete/:id", async (request, response) => {
 
     const deleteCaso = await casoCorteIDHModel.findByIdAndDelete(id);
 
+    const reparacoesAssociadas = await reparacaoModel.find({ caso: id });
+
+    let countInfosDeletadas = 0;
+
+    for (let eachReparacao of reparacoesAssociadas) {
+      eachReparacao.infos_cumprimento.map(async (eachInfo) => {
+        await infoModel.findByIdAndDelete(eachInfo);
+        countInfosDeletadas++;
+      });
+    }
+
     await reparacaoModel.deleteMany({ caso: id });
+
+    console.log(
+      `💡`,
+      deleteCaso.caso,
+      `💡 deletado! ❌❌❌`,
+      "\n",
+      reparacoesAssociadas.length,
+      `reparações associadas deletadas ❌❌❌!`,
+      "\n",
+      countInfosDeletadas,
+      `info(s) associadas deletada(s)!❌❌❌`
+    );
 
     return response.status(200).json(deleteCaso);
   } catch (error) {
