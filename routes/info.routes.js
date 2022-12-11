@@ -55,6 +55,26 @@ infoRouter.post("/:reparacaoId", async (req, res) => {
   }
 });
 
+//rota para editar info, a partir da página de Reparacao
+infoRouter.put("/editfromreparacoes/:infoid", async (req, res) => {
+  try {
+    const { infoid } = req.params;
+
+    const infoEditada = await infoModel.findOneAndUpdate(
+      {_id: infoid},
+      {...req.body},
+      { new: true, runValidators: true }      
+    );
+    console.log(`Info sobre Medida de Reparação editada com sucesso! 📝📝📝`);
+  
+
+    return res.status(201).json(newInfo);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Algo está errado" });
+  }
+});
+
 infoRouter.put("/edit/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -76,6 +96,8 @@ infoRouter.put("/edit/:id", async (req, res) => {
     return res.status(500).json({ msg: "Algo está errado" });
   }
 });
+
+
 
 infoRouter.post("/p/createManyInfos", async (req, res) => {
   try {
