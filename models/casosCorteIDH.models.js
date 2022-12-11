@@ -15,7 +15,7 @@ const casoCorteIDHSchema = new Schema(
     longitude: Number,
     imagem: String,
     resumo_caso: String,
-    vítimas: String,
+    vitimas: String,
     representantes: String,
     palavras_chave: [String],
     sentenca_lin: String,
