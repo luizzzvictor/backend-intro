@@ -23,7 +23,7 @@ router.get("/:id", async (request, response) => {
 
     const reparacao = await reparacaoModel
       .findById(id)
-      .populate("infos_cumprimento", "infos_relevantes");
+      .populate("infos_cumprimento");
 
     if (!reparacao) {
       return response
