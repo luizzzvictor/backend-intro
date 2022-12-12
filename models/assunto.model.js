@@ -6,7 +6,7 @@ const assuntoSchema = new Schema(
       type: String,
       required: true,
       minLength: 2,
-      maxLength: 50,
+      maxLength: 200,
     },
     codigo: {
       type: Number,

@@ -68,6 +68,6 @@ const novasPalavrasChave = dataPalavrasChave.map( (palavra) => {
 
 // console.log(dataPalavrasChave)
 
-  fs.writeFile(`./data/palavras_chave.json`, JSON.stringify(novasPalavrasChave), (err) =>
-    err ? console.log(err) : null
-  );
+  // fs.writeFile(`./data/palavras_chave.json`, JSON.stringify(novasPalavrasChave), (err) =>
+  //   err ? console.log(err) : null
+  // );

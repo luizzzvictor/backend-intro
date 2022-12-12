@@ -6,7 +6,7 @@ const orgaoSchema = new Schema(
       type: String,
       required: true,
       minLength: 2,
-      maxLength: 50,
+      maxLength: 100,
     },
     SEQ_ORGAO: {
       type: Number,
