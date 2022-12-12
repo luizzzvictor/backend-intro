@@ -3306,7 +3306,7 @@
     "SEQ_MUNICIPIO": 5843,
     "UF": "PR"
   },
-//   {
+  {
     "SEQ_ORGAO": 632,
     "NOM_ORGAO": "CASCAVEL",
     "SEQ_MUNICIPIO": 1256,
@@ -3595,7 +3595,7 @@
     "SEQ_MUNICIPIO": 1267,
     "UF": "CE"
   },
-//   {
+  {
     "SEQ_ORGAO": 681,
     "NOM_ORGAO": "CHOROZINHO",
     "SEQ_MUNICIPIO": 1268,

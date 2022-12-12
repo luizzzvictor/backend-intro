@@ -2,21 +2,21 @@ import { Schema, model } from "mongoose";
 
 const orgaoSchema = new Schema(
   {
-    name: {
+    NOM_ORGAO: {
       type: String,
       required: true,
       minLength: 2,
       maxLength: 50,
     },
-    codigo: {
-      type: String,
+    SEQ_ORGAO: {
+      type: Number,
       required: true,
       unique: true,
       minLength: 1,
       maxLength: 8,
     },
-    municipio: { 
-        type: String,
+    SEQ_MUNICIPIO: { 
+        type: Number,
         required: true,
         minLength: 1,
         maxLength: 8,
