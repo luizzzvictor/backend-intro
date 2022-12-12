@@ -2,14 +2,14 @@ import { Schema, model } from "mongoose";
 
 const assuntoSchema = new Schema(
   {
-    name: {
+    palavra_chave: {
       type: String,
       required: true,
       minLength: 2,
-      maxLength: 50,
+      maxLength: 200,
     },
     codigo: {
-      type: String,
+      type: Number,
       required: true,
       unique: true,
       minLength: 1,

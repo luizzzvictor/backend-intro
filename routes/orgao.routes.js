@@ -3,6 +3,7 @@ import isAuth from "../middlewares/isAuth.js";
 import attachCurrentUser from "../middlewares/attachCurrentUser.js";
 import isAdmin from "../middlewares/isAdmin.js";
 import OrgaoModel from "../models/orgao.model.js";
+import dataOrgaos from "../data/data-users/dataTribunais(filtrado).json" assert { type: "json" }
 
 const orgaoRoute = express.Router();
 
@@ -30,6 +31,21 @@ orgaoRoute.post("/insert", isAuth, isAdmin, attachCurrentUser, async (req, res) 
     return res.status(500).json({ msg: "Erro ao inserir um Órgão" });
   }
 });
+
+orgaoRoute.post("/insert-all", async (req, res) => {
+  try{
+    const insertAllOrgaos = await OrgaoModel.insertMany(dataOrgaos)
+    console.log(insertAllOrgaos.length, `Órgãos criados! ✅✅✅`);
+
+    return res
+    .status(201)
+    .json({ notificacao: `${insertAllOrgaos.length} Órgãos criados! ✅✅✅` })
+
+  } catch(error) {
+    console.log(error)
+    return res.status(500).json({ msg: "Erro ao inserir o cadastro geral de Órgãos" });
+  }
+} )
 
 
 //getid:/id

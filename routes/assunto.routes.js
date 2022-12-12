@@ -3,6 +3,7 @@ import isAuth from "../middlewares/isAuth.js";
 import attachCurrentUser from "../middlewares/attachCurrentUser.js";
 import isAdmin from "../middlewares/isAdmin.js";
 import AssuntoModel from "../models/assunto.model.js";
+import dataAssuntos from "../data/palavras_chave.json" assert {type: "json"}
 
 const assuntoRoute = express.Router();
 
@@ -30,6 +31,22 @@ assuntoRoute.post("/insert", isAuth, isAdmin, attachCurrentUser, async (req, res
     return res.status(500).json({ msg: "Erro ao inserir um Assunto" });
   }
 });
+
+assuntoRoute.post("/insert-all", async (req, res) => {
+  try{
+    const insertAllAssuntos = await AssuntoModel.insertMany(dataAssuntos)
+    console.log(insertAllAssuntos.length, `Assuntos criados! ✅✅✅`);
+
+    return res
+    .status(201)
+    .json({ notificacao: `${insertAllAssuntos.length} Assuntos criados! ✅✅✅` })
+
+  } catch(error) {
+    console.log(error)
+    return res.status(500).json({ msg: "Erro ao inserir o cadastro geral de Assuntos" });
+  }
+} )
+
 
 
 //getid:/id
