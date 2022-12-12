@@ -109,7 +109,7 @@ router.put("/edit/:id", async (request, response) => {
       { new: true, runValidators: true }
     );
 
-    console.log(`Medida de Reparação 💡`,update._id, `💡 editada com sucesso! 📝📝📝 `)
+    console.log(`Medida de Reparação 💡`,update._id, `💡 editada com sucesso! 📝 `)
 
 
     return response.status(200).json(update);
@@ -141,10 +141,10 @@ router.delete("/delete/:id", async (request, response) => {
     console.log(
       `Reparação id:`,
       deleteReparacao._id,
-      `deletada! ❌❌❌`,
+      `deletada! ❌`,
       "\n",
       countInfosDeletadas,
-      `info(s) associadas deletada(s)!❌❌❌`
+      `info(s) associadas deletada(s)!❌❌`
     );
 
     return response.status(200).json(deleteReparacao);

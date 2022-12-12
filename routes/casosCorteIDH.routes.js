@@ -125,7 +125,7 @@ router.put("/edit/:id", async (request, response) => {
       { new: true, runValidators: true }
     );
     
-    console.log(`💡`,update.caso, `💡 editado com sucesso! 📝📝📝 `)
+    console.log(`💡`,update.caso, `💡 editado com sucesso! 📝 `)
 
 
     return response.status(200).json(update);
@@ -157,7 +157,7 @@ router.delete("/delete/:id", async (request, response) => {
     console.log(
       `💡`,
       deleteCaso.caso,
-      `💡 deletado! ❌❌❌`,
+      `💡 deletado! ❌`,
       "\n",
       reparacoesAssociadas.length,
       `reparações associadas deletadas ❌❌❌!`,

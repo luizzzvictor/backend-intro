@@ -56,19 +56,22 @@ infoRouter.post("/:reparacaoId", async (req, res) => {
 });
 
 //rota para editar info, a partir da página de Reparacao
-infoRouter.put("/editfromreparacoes/:infoid", async (req, res) => {
+infoRouter.put("/editfromreparacoes", async (req, res) => {
   try {
-    const { infoid } = req.params;
+    
+    const idDaInfo = req.body._id
 
-    const infoEditada = await infoModel.findOneAndUpdate(
-      {_id: infoid},
+    delete req.body._id
+
+    const infoEditada = await infoModel.findByIdAndUpdate(
+      idDaInfo,
       {...req.body},
-      { new: true, runValidators: true }      
+      { new: true, runValidators: true }        
     );
     console.log(`Info sobre Medida de Reparação editada com sucesso! 📝📝📝`);
   
 
-    return res.status(201).json(newInfo);
+    return res.status(201).json(infoEditada);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "Algo está errado" });
@@ -87,7 +90,7 @@ infoRouter.put("/edit/:id", async (req, res) => {
       { new: true, runValidators: true }
     );
 
-    console.log(`Informação💡`,update._id, `💡 editada com sucesso! 📝📝📝 `)
+    console.log(`Informação💡`,update._id, `💡 editada com sucesso! 📝`)
 
 
     return res.status(200).json(update);
@@ -138,7 +141,7 @@ infoRouter.delete("/:infoId", async (req, res) => {
 
     console.log( `Info id:`,
     deleteInfo._id,
-    `deletada! ❌❌❌`
+    `deletada! ❌`
   );
 
     return res.status(200).json(deleteInfo);
