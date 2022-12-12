@@ -18,7 +18,7 @@ const casoCorteIDHSchema = new Schema(
     vitimas: String,
     representantes: String,
     palavras_chave: [String],
-    sentenca_lin: String,
+    sentenca_link: String,
     link_portugues: String,
     ordem_sentencas: Number,
     cidh_peticao: Date,
