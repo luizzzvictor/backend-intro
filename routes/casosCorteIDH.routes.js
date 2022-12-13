@@ -5,6 +5,8 @@ import infoModel from "../models/info.model.js";
 import dataCasos from "../data/casos.json" assert { type: "json" };
 import dataReparacoes from "../data/reparacoes.json" assert { type: "json" };
 import dataInfos from "../data/infos.json" assert { type: "json" };
+import dataCasosEPalavras from "../data/filtroCasosPalavrasChave.json" assert {type: "json"};
+import AssuntoModel from "../models/assunto.model.js";
 
 const router = express.Router();
 
@@ -68,6 +70,20 @@ router.post("/populateDB", async (req, res) => {
   try {
     const postAllCasos = await casoCorteIDHModel.insertMany(dataCasos);
     console.log(postAllCasos.length, `Casos criados! ✅✅✅`);
+
+    const palavrasChave = await AssuntoModel.find()
+
+    palavrasChave.map(async (p) => {
+
+      for (let i=0; i< dataCasosEPalavras.length; i++) {
+        if (dataCasosEPalavras[i].palavras_chave.includes(p.palavra_chave)) {
+          await casoCorteIDHModel.findOneAndUpdate(
+            { caso: dataCasosEPalavras[i].caso },
+          { $push: { palavras_chave: p._id } }
+          )
+        }
+      }
+    })
 
     const postingReparacoes = await reparacaoModel.insertMany(dataReparacoes);
     console.log(

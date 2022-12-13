@@ -18,6 +18,16 @@ orgaoRoute.get("/getall", isAuth, attachCurrentUser, async (req, res) => {
   }
 });
 
+orgaoRoute.get("/getall-nologin", async (req, res) => {
+  try {
+    const tOrgaos = await OrgaoModel.find();
+    return res.status(200).json(tOrgaos);    
+  } catch (error) {
+    console.log("Erro ao buscar Órgãos");
+    return res.status(400).json({ msg: "Erro ao buscar Órgãos" });
+  }
+});
+
 
 //insert
 orgaoRoute.post("/insert", isAuth, isAdmin, attachCurrentUser, async (req, res) => {
