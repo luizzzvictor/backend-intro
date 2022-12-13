@@ -19,6 +19,9 @@ const transporter = nodemailer.createTransport({
     secure: false,
     user: process.env.EMAIL,
     pass: process.env.EMAIL_PASS,
+    tls: {
+      rejectUnauthorized: false
+    },
   },
 });
 
@@ -53,7 +56,7 @@ userRoute.post("/sign-up", async (req, res) => {
 
     //configuro o corpo do email
     const mailOptions = {
-      from: "turma92wd@hotmail.com", //nosso email
+      from: "turma91wd@hotmail.com", //nosso email
       to: email, //o email do usuário
       subject: "Ativação de Conta",
       html: `
@@ -63,8 +66,13 @@ userRoute.post("/sign-up", async (req, res) => {
       `,
     };
 
+    //console.log(mailOptions)
+
     //envio do email
-    //await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions,(err,result)=>{
+      if (err) console.log("Erro envio e-mail: " + err)
+      console.log("Mensagem: " + result)
+    });
 
     return res.status(201).json(newUser);
   } catch (error) {
