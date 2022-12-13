@@ -8,7 +8,10 @@ const InfoSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Reparacoe"
     },   
-    tribunal: String,
+    usuario_informante: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
     unidade_judiciaria: String,
     infos_relevantes: String,    
     notificar_estado_cumprimento: {
