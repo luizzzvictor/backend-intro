@@ -24,6 +24,8 @@ orgaoRoute.post("/insert", isAuth, isAdmin, attachCurrentUser, async (req, res) 
   try {
     const newUser = await OrgaoModel.create({
       ...req.body,
+      "SEQ_ORGAO": parseInt(req.body.SEQ_ORGAO),
+      "SEQ_MUNICIPIO": parseInt(req.body.SEQ_MUNICIPIO)
     });
     return res.status(201).json(newUser);
   } catch (error) {
