@@ -30,12 +30,9 @@ const userSchema = new Schema(
       enum: ["admin", "prestador", "vitima", "representante", "interessado"],
       default: "admin",
     },
-    orgao: {
-      type: String,
-      required: true,
-      minLength: 1,
-      maxLength: 6,
-    },
+    orgao: [
+      {type:Schema.Types.ObjectId, ref:"Assunto"}
+    ],
     confirmEmail: {
       type: Boolean,
       default: true,

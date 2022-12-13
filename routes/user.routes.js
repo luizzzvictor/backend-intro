@@ -160,7 +160,7 @@ userRoute.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     //achar o usuário no banco de dados pelo email
-    const user = await UserModel.findOne({ email: email });
+    const user = await UserModel.findOne({ email: email }).populate("orgao");
 
     //checar se o email existe no meu banco de dados
     if (!user) {
