@@ -17,7 +17,9 @@ const casoCorteIDHSchema = new Schema(
     resumo_caso: String,
     vitimas: String,
     representantes: String,
-    palavras_chave: [String],
+    palavras_chave: [
+      {type:Schema.Types.ObjectId, ref:"Assunto"}
+    ],
     sentenca_link: String,
     link_portugues: String,
     ordem_sentencas: Number,

@@ -1,5 +1,6 @@
 import dataTribunais from "./dataTribunais.json" assert { type: "json" };
 import dataPalavrasChave from "../palavras_chave.json" assert { type: "json" }
+import dataCasos from "../casos.json" assert { type: "json" }
 import * as fs from "fs"
 
 const tribunais = dataTribunais.filter((tribunal) => {
@@ -71,3 +72,16 @@ const novasPalavrasChave = dataPalavrasChave.map( (palavra) => {
   // fs.writeFile(`./data/palavras_chave.json`, JSON.stringify(novasPalavrasChave), (err) =>
   //   err ? console.log(err) : null
   // );
+
+  const casosPalavras = dataCasos.map((i) => {
+    const object = {}
+
+    object.caso = i.caso
+    object.palavras_chave = i.palavras_chave
+    
+    return object
+  })
+
+    fs.writeFile(`./data/filtroCasosPalavrasChave.json`, JSON.stringify(casosPalavras), (err) =>
+    err ? console.log(err) : null
+  );
