@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get("/", async (request, response) => {
   try {
-    const casos = await casoCorteIDHModel.find().populate("medidas_reparacao");
+    const casos = await casoCorteIDHModel.find().populate("medidas_reparacao").populate("palavras_chave");
     console.log(casos.length, "Casos cadastrados!👁️");
 
     return response.status(200).json(casos);
@@ -25,7 +25,7 @@ router.get("/:id", async (request, response) => {
 
     const caso = await casoCorteIDHModel
       .findById(id)
-      .populate("medidas_reparacao");
+      .populate("medidas_reparacao").populate("palavras_chave");
 
     if (!caso) {
       return response.status(404).json("Caso não foi encontrado!");

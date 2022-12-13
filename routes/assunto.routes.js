@@ -61,7 +61,7 @@ assuntoRoute.post("/atribuir-all", async (req,res) => {
           await CasoCorteIDHModel.findOneAndUpdate(
             { caso: dataCasosEPalavras[i].caso },
           { $push: { palavras_chave: p._id } }
-          )
+          ).populate("palavras_chave")
         }
       }
     })
