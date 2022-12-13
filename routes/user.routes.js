@@ -85,7 +85,7 @@ userRoute.post("/sign-up", async (req, res) => {
 //get-all
 userRoute.get("/getall", isAuth, attachCurrentUser, async (req, res) => {
   try {
-    const tUsuarios = await UserModel.find();
+    const tUsuarios = await UserModel.find().populate("orgao");
     return res.status(200).json(tUsuarios);    
   } catch (error) {
     console.log("Erro ao buscar Usuários");

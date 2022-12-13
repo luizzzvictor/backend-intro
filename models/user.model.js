@@ -31,7 +31,7 @@ const userSchema = new Schema(
       default: "admin",
     },
     orgao: [
-      {type:Schema.Types.ObjectId, ref:"Assunto"}
+      {type:Schema.Types.ObjectId, ref:"Orgao"}
     ],
     confirmEmail: {
       type: Boolean,
