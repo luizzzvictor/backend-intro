@@ -4,6 +4,7 @@ import reparacaoModel from "../models/reparacao.model.js";
 import dataInfos from "../data/infos.json" assert { type: "json" };
 import isAuth from "../middlewares/isAuth.js";
 import attachCurrentUser from "../middlewares/attachCurrentUser.js";
+import UserModel from "../models/user.model.js";
 
 const infoRouter = express.Router();
 
@@ -129,6 +130,14 @@ infoRouter.post("/p/createManyInfos", async (req, res) => {
           });
           await infoModel.updateOne(eachInfo, { reparacao: result._id });
         });
+
+      //// MODIFICAR PARA INSERIR INFOS AUTOMÁTICAS DE ALGUM PRESTADOR
+      const usuariosInformantes = await UserModel.find();
+      let randomUser = Math.floor(Math.random() * usuariosInformantes.length);
+
+      await infoModel.updateOne(eachInfo, {
+        usuario_informante: usuariosInformantes[randomUser],
+      });
     });
     console.log(postingInfos.length, `Infos povoadas aleatoriamente! 👨‍👨‍👦`);
 
