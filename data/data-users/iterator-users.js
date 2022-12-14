@@ -17,14 +17,16 @@ const tribunais = dataTribunais.filter((tribunal) => {
 });
 
 const nomeDosTribunais = tribunais.map((i) => {
-  const object = {}
+  // const object = {}
 
-  object.SEQ_ORGAO = i.SEQ_ORGAO;
-  object.NOM_ORGAO = i.NOM_ORGAO;
-  object.SEQ_MUNICIPIO = i.SEQ_MUNICIPIO
+  // object.SEQ_ORGAO = i.SEQ_ORGAO;
+  // object.NOM_ORGAO = i.NOM_ORGAO;
+  // object.SEQ_MUNICIPIO = i.SEQ_MUNICIPIO
 
-  return object
+  return i.NOM_ORGAO
 } )
+
+console.log(nomeDosTribunais)
 
 const municipios = dataTribunais.filter((municipio) => {
   if (municipio.SEQ_TIPO_ORGAO === 12450 && municipio.FLG_ATIVO==="true") {
@@ -82,6 +84,6 @@ const novasPalavrasChave = dataPalavrasChave.map( (palavra) => {
     return object
   })
 
-    fs.writeFile(`./data/filtroCasosPalavrasChave.json`, JSON.stringify(casosPalavras), (err) =>
-    err ? console.log(err) : null
-  );
+  //   fs.writeFile(`./data/filtroCasosPalavrasChave.json`, JSON.stringify(casosPalavras), (err) =>
+  //   err ? console.log(err) : null
+  // );

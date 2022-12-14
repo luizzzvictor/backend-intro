@@ -7,6 +7,7 @@ import dataReparacoes from "../data/reparacoes.json" assert { type: "json" };
 import dataInfos from "../data/infos.json" assert { type: "json" };
 import dataCasosEPalavras from "../data/filtroCasosPalavrasChave.json" assert {type: "json"};
 import AssuntoModel from "../models/assunto.model.js";
+import UserModel from "../models/user.model.js";
 
 const router = express.Router();
 
@@ -117,6 +118,14 @@ router.post("/populateDB", async (req, res) => {
           });
           await infoModel.updateOne(eachInfo, { reparacao: result._id });
         });
+
+        //// MODIFICAR PARA INSERIR INFOS AUTOMÁTICAS DE ALGUM PRESTADOR
+      const usuariosInformantes = await UserModel.find();
+      let randomUser = Math.floor(Math.random() * usuariosInformantes.length);
+
+      await infoModel.updateOne(eachInfo, {
+        usuario_informante: usuariosInformantes[randomUser],
+      });
     });
 
     console.log(postingInfos.length, `Infos povoadas aleatoriamente! 👨‍👨‍👦`);
