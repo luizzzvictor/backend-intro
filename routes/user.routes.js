@@ -7,6 +7,7 @@ import isAdmin from "../middlewares/isAdmin.js";
 import nodemailer from "nodemailer";
 // import TaskModel from "../models/task.model.js";
 import UserModel from "../models/user.model.js";
+import OrgaoModel from "../models/orgao.model.js";
 
 const userRoute = express.Router();
 
@@ -92,6 +93,24 @@ userRoute.get("/getall", isAuth, attachCurrentUser, async (req, res) => {
     return res.status(400).json({ msg: "Erro ao buscar Usuários" });
   }
 });
+
+//profile
+userRoute.get("/profileNV", isAuth, attachCurrentUser, async (req,res) => {
+  try {
+
+    const usuario = await UserModel.find(req.currentUser)
+
+    const orgao = await OrgaoModel.findById(req.currentUser.orgao)
+
+    const nomeOrgao = orgao.NOM_ORGAO
+
+    return res.status(200).json(nomeOrgao)
+
+  } catch(error) {
+    console.log (error)
+    return res.status(500).json(error.errors)
+  }
+})
 
 
 //insert

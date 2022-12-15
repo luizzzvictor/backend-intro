@@ -8,7 +8,7 @@ import dataMunicipios from "../data/data-users/dataMunicipios.json" assert { typ
 const municipioRoute = express.Router();
 
 //get-all
-municipioRoute.get("/getall", isAuth, attachCurrentUser, async (req, res) => {
+municipioRoute.get("/getall", isAuth, isAdmin, attachCurrentUser, async (req, res) => {
   try {
     const tMunicipios = await MunicipioModel.find();
     return res.status(200).json(tMunicipios);    
