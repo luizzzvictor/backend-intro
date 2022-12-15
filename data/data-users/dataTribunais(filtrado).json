@@ -1,0 +1,318 @@
+[
+  {
+    "SEQ_ORGAO": 1,
+    "NOM_ORGAO": "Conselho Nacional de Justiça",
+    "SEQ_MUNICIPIO": 1724
+  },
+  {
+    "SEQ_ORGAO": 2,
+    "NOM_ORGAO": "Conselho da Justiça Federal",
+    "SEQ_MUNICIPIO": 1724
+  },
+  {
+    "SEQ_ORGAO": 3,
+    "NOM_ORGAO": "Tribunal Regional Federal da 1ª Região",
+    "SEQ_MUNICIPIO": 1724
+  },
+  {
+    "SEQ_ORGAO": 4,
+    "NOM_ORGAO": "Tribunal Regional Federal da 2ª Região",
+    "SEQ_MUNICIPIO": 6861
+  },
+  {
+    "SEQ_ORGAO": 5,
+    "NOM_ORGAO": "Tribunal Regional Federal da 3ª Região",
+    "SEQ_MUNICIPIO": 9422
+  },
+  {
+    "SEQ_ORGAO": 6,
+    "NOM_ORGAO": "Tribunal Regional Federal da 4ª Região",
+    "SEQ_MUNICIPIO": 7777
+  },
+  {
+    "SEQ_ORGAO": 7,
+    "NOM_ORGAO": "Tribunal Regional Federal da 5ª Região",
+    "SEQ_MUNICIPIO": 5333
+  },
+  {
+    "SEQ_ORGAO": 8,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado do Acre",
+    "SEQ_MUNICIPIO": 16
+  },
+  {
+    "SEQ_ORGAO": 9,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado de Alagoas",
+    "SEQ_MUNICIPIO": 107
+  },
+  {
+    "SEQ_ORGAO": 10,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado do Amazonas",
+    "SEQ_MUNICIPIO": 240
+  },
+  {
+    "SEQ_ORGAO": 11,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado do Amapá",
+    "SEQ_MUNICIPIO": 304
+  },
+  {
+    "SEQ_ORGAO": 12,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado da Bahia",
+    "SEQ_MUNICIPIO": 981
+  },
+  {
+    "SEQ_ORGAO": 13,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado do Ceará",
+    "SEQ_MUNICIPIO": 1320
+  },
+  {
+    "SEQ_ORGAO": 14,
+    "NOM_ORGAO": "Tribunal de Justiça do Distrito Federal e dos Territórios",
+    "SEQ_MUNICIPIO": 1724
+  },
+  {
+    "SEQ_ORGAO": 15,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado do Espírito Santo",
+    "SEQ_MUNICIPIO": 1994
+  },
+  {
+    "SEQ_ORGAO": 16,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado de Goiás",
+    "SEQ_MUNICIPIO": 2120
+  },
+  {
+    "SEQ_ORGAO": 17,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado do Maranhão",
+    "SEQ_MUNICIPIO": 2533
+  },
+  {
+    "SEQ_ORGAO": 18,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado de Minas Gerais",
+    "SEQ_MUNICIPIO": 2700
+  },
+  {
+    "SEQ_ORGAO": 19,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado de Mato Grosso do Sul",
+    "SEQ_MUNICIPIO": 4079
+  },
+  {
+    "SEQ_ORGAO": 20,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado de Mato Grosso",
+    "SEQ_MUNICIPIO": 4282
+  },
+  {
+    "SEQ_ORGAO": 21,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado do Pará",
+    "SEQ_MUNICIPIO": 4499
+  },
+  {
+    "SEQ_ORGAO": 22,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado da Paraíba",
+    "SEQ_MUNICIPIO": 4895
+  },
+  {
+    "SEQ_ORGAO": 23,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado de Pernambuco",
+    "SEQ_MUNICIPIO": 5333
+  },
+  {
+    "SEQ_ORGAO": 24,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado do Piauí",
+    "SEQ_MUNICIPIO": 5647
+  },
+  {
+    "SEQ_ORGAO": 25,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado do Paraná",
+    "SEQ_MUNICIPIO": 5915
+  },
+  {
+    "SEQ_ORGAO": 26,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado do Rio de Janeiro",
+    "SEQ_MUNICIPIO": 6861
+  },
+  {
+    "SEQ_ORGAO": 27,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado do Rio Grande do Norte",
+    "SEQ_MUNICIPIO": 7039
+  },
+  {
+    "SEQ_ORGAO": 28,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado de Rondônia",
+    "SEQ_MUNICIPIO": 7170
+  },
+  {
+    "SEQ_ORGAO": 29,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado de Roraima",
+    "SEQ_MUNICIPIO": 7193
+  },
+  {
+    "SEQ_ORGAO": 30,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado do Rio Grande do Sul",
+    "SEQ_MUNICIPIO": 7777
+  },
+  {
+    "SEQ_ORGAO": 31,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado de Santa Catarina",
+    "SEQ_MUNICIPIO": 8213
+  },
+  {
+    "SEQ_ORGAO": 32,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado de Sergipe",
+    "SEQ_MUNICIPIO": 8528
+  },
+  {
+    "SEQ_ORGAO": 33,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado de São Paulo",
+    "SEQ_MUNICIPIO": 9422
+  },
+  {
+    "SEQ_ORGAO": 34,
+    "NOM_ORGAO": "Tribunal de Justiça do Estado de Tocantins",
+    "SEQ_MUNICIPIO": 9653
+  },
+  {
+    "SEQ_ORGAO": 12728,
+    "NOM_ORGAO": "Superior Tribunal de Justiça",
+    "SEQ_MUNICIPIO": 1724
+  },
+  {
+    "SEQ_ORGAO": 12991,
+    "NOM_ORGAO": "Tribunal Superior Eleitoral",
+    "SEQ_MUNICIPIO": 1724
+  },
+  {
+    "SEQ_ORGAO": 13197,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 1ª Região",
+    "SEQ_MUNICIPIO": 6861
+  },
+  {
+    "SEQ_ORGAO": 13198,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 2ª Região",
+    "SEQ_MUNICIPIO": 9422
+  },
+  {
+    "SEQ_ORGAO": 13199,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 3ª Região",
+    "SEQ_MUNICIPIO": 2700
+  },
+  {
+    "SEQ_ORGAO": 13200,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 4ª Região",
+    "SEQ_MUNICIPIO": 7777
+  },
+  {
+    "SEQ_ORGAO": 13201,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 5ª Região",
+    "SEQ_MUNICIPIO": 981
+  },
+  {
+    "SEQ_ORGAO": 13202,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 6ª Região",
+    "SEQ_MUNICIPIO": 5333
+  },
+  {
+    "SEQ_ORGAO": 13203,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 7ª Região",
+    "SEQ_MUNICIPIO": 1320
+  },
+  {
+    "SEQ_ORGAO": 13204,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 8ª Região",
+    "SEQ_MUNICIPIO": 4499
+  },
+  {
+    "SEQ_ORGAO": 13205,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 9ª Região",
+    "SEQ_MUNICIPIO": 5915
+  },
+  {
+    "SEQ_ORGAO": 13206,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 10ª Região",
+    "SEQ_MUNICIPIO": 1724
+  },
+  {
+    "SEQ_ORGAO": 13207,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 11ª Região",
+    "SEQ_MUNICIPIO": 240
+  },
+  {
+    "SEQ_ORGAO": 13208,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 12ª Região",
+    "SEQ_MUNICIPIO": 8213
+  },
+  {
+    "SEQ_ORGAO": 13209,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 13ª Região",
+    "SEQ_MUNICIPIO": 4895
+  },
+  {
+    "SEQ_ORGAO": 13210,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 14ª Região",
+    "SEQ_MUNICIPIO": 7170
+  },
+  {
+    "SEQ_ORGAO": 13211,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 15ª Região",
+    "SEQ_MUNICIPIO": 8781
+  },
+  {
+    "SEQ_ORGAO": 13212,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 16ª Região",
+    "SEQ_MUNICIPIO": 2533
+  },
+  {
+    "SEQ_ORGAO": 13213,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 17ª Região",
+    "SEQ_MUNICIPIO": 1994
+  },
+  {
+    "SEQ_ORGAO": 13214,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 18ª Região",
+    "SEQ_MUNICIPIO": 2120
+  },
+  {
+    "SEQ_ORGAO": 13215,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 19ª Região",
+    "SEQ_MUNICIPIO": 107
+  },
+  {
+    "SEQ_ORGAO": 13216,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 20ª Região",
+    "SEQ_MUNICIPIO": 8528
+  },
+  {
+    "SEQ_ORGAO": 13217,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 21ª Região",
+    "SEQ_MUNICIPIO": 7039
+  },
+  {
+    "SEQ_ORGAO": 13218,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 22ª Região",
+    "SEQ_MUNICIPIO": 5647
+  },
+  {
+    "SEQ_ORGAO": 13219,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 23ª Região",
+    "SEQ_MUNICIPIO": 4282
+  },
+  {
+    "SEQ_ORGAO": 13220,
+    "NOM_ORGAO": "Tribunal Regional do Trabalho da 24ª Região",
+    "SEQ_MUNICIPIO": 4079
+  },
+  {
+    "SEQ_ORGAO": 13221,
+    "NOM_ORGAO": "Tribunal Superior do Trabalho",
+    "SEQ_MUNICIPIO": 1724
+  },
+  {
+    "SEQ_ORGAO": 13309,
+    "NOM_ORGAO": "Superior Tribunal Militar",
+    "SEQ_MUNICIPIO": 1724
+  },
+  {
+    "SEQ_ORGAO": 13891,
+    "NOM_ORGAO": "Supremo Tribunal Federal",
+    "SEQ_MUNICIPIO": 1724
+  }
+  
+]
