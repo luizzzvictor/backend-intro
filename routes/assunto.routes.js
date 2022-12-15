@@ -3,6 +3,9 @@ import isAuth from "../middlewares/isAuth.js";
 import attachCurrentUser from "../middlewares/attachCurrentUser.js";
 import isAdmin from "../middlewares/isAdmin.js";
 import AssuntoModel from "../models/assunto.model.js";
+import dataAssuntos from "../data/palavras_chave.json" assert {type: "json"}
+import dataCasosEPalavras from "../data/filtroCasosPalavrasChave.json" assert {type: "json"}
+import CasoCorteIDHModel from "../models/casosCorteIDH.models.js";
 
 const assuntoRoute = express.Router();
 
@@ -30,6 +33,47 @@ assuntoRoute.post("/insert", isAuth, isAdmin, attachCurrentUser, async (req, res
     return res.status(500).json({ msg: "Erro ao inserir um Assunto" });
   }
 });
+
+assuntoRoute.post("/insert-all", async (req, res) => {
+  try{
+    const insertAllAssuntos = await AssuntoModel.insertMany(dataAssuntos)
+    console.log(insertAllAssuntos.length, `Assuntos criados! ✅✅✅`);
+
+    return res
+    .status(201)
+    .json({ notificacao: `${insertAllAssuntos.length} Assuntos criados! ✅✅✅` })
+
+  } catch(error) {
+    console.log(error)
+    return res.status(500).json({ msg: "Erro ao inserir o cadastro geral de Assuntos" });
+  }
+} )
+
+assuntoRoute.post("/atribuir-all", async (req,res) => {
+  try {
+
+    const palavrasChave = await AssuntoModel.find()
+
+    palavrasChave.map(async (p) => {
+
+      for (let i=0; i< dataCasosEPalavras.length; i++) {
+        if (dataCasosEPalavras[i].palavras_chave.includes(p.palavra_chave)) {
+          await CasoCorteIDHModel.findOneAndUpdate(
+            { caso: dataCasosEPalavras[i].caso },
+          { $push: { palavras_chave: p._id } }
+          ).populate("palavras_chave")
+        }
+      }
+    })
+    
+    return res.status(200).json("Palavras chaves atribuídas aos casos")
+
+
+  } catch(error) {
+    console.log(error)
+    return res.status(500).json({msg:"Erro ao atribuir as Palavras-chaves ao Caso"})
+  }
+})
 
 
 //getid:/id

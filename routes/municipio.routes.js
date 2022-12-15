@@ -3,6 +3,7 @@ import isAuth from "../middlewares/isAuth.js";
 import attachCurrentUser from "../middlewares/attachCurrentUser.js";
 import isAdmin from "../middlewares/isAdmin.js";
 import MunicipioModel from "../models/municipio.model.js";
+import dataMunicipios from "../data/data-users/dataMunicipios.json" assert { type: "json" }
 
 const municipioRoute = express.Router();
 
@@ -30,6 +31,21 @@ municipioRoute.post("/insert", isAuth, isAdmin, attachCurrentUser, async (req, r
     return res.status(500).json({ msg: "Erro ao inserir um Município" });
   }
 });
+
+municipioRoute.post("/insert-all", async (req, res) => {
+  try{
+    const insertAllMunicipios = await MunicipioModel.insertMany(dataMunicipios)
+    console.log(insertAllMunicipios.length, `Municípios criados! ✅✅✅`);
+
+    return res
+    .status(201)
+    .json({ notificacao: `${insertAllMunicipios.length} Municipios criados! ✅✅✅` })
+
+  } catch(error) {
+    console.log(error)
+    return res.status(500).json({ msg: "Erro ao inserir o cadastro geral de Municípios" });
+  }
+} )
 
 
 //getid:/id

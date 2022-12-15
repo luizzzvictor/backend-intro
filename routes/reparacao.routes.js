@@ -23,7 +23,14 @@ router.get("/:id", async (request, response) => {
 
     const reparacao = await reparacaoModel
       .findById(id)
-      .populate("infos_cumprimento");
+      .populate({
+        path: "infos_cumprimento",
+        populate: {
+          path: "usuario_informante",
+          model: "User",
+          populate: { path: "orgao", model: "Orgao" },
+        },
+      });
 
     if (!reparacao) {
       return response
@@ -87,7 +94,6 @@ router.post("/create-all", async (request, response) => {
       criarRefs();
     }
 
-
     return response.status(201).json({
       notificacao: `${postingReparacoes.length} Medidas de Reparação criadas! ✅✅✅`,
     });
@@ -109,8 +115,11 @@ router.put("/edit/:id", async (request, response) => {
       { new: true, runValidators: true }
     );
 
-    console.log(`Medida de Reparação 💡`,update._id, `💡 editada com sucesso! 📝📝📝 `)
-
+    console.log(
+      `Medida de Reparação 💡`,
+      update._id,
+      `💡 editada com sucesso! 📝 `
+    );
 
     return response.status(200).json(update);
   } catch (error) {
@@ -125,7 +134,7 @@ router.delete("/delete/:id", async (request, response) => {
 
     const deleteReparacao = await reparacaoModel.findByIdAndDelete(id);
 
-    console.log(deleteReparacao)
+    console.log(deleteReparacao);
 
     let countInfosDeletadas = 0;
 
@@ -141,10 +150,10 @@ router.delete("/delete/:id", async (request, response) => {
     console.log(
       `Reparação id:`,
       deleteReparacao._id,
-      `deletada! ❌❌❌`,
+      `deletada! ❌`,
       "\n",
       countInfosDeletadas,
-      `info(s) associadas deletada(s)!❌❌❌`
+      `info(s) associadas deletada(s)!❌❌`
     );
 
     return response.status(200).json(deleteReparacao);

@@ -15,9 +15,9 @@ const userSchema = new Schema(
       lowercase: true,
       match: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
     },
-    passwordHash: { 
-      type: String, 
-      //required: true 
+    passwordHash: {
+      type: String,
+      //required: true
     },
     telefone: {
       type: String,
@@ -30,12 +30,8 @@ const userSchema = new Schema(
       enum: ["admin", "prestador", "vitima", "representante", "interessado"],
       default: "admin",
     },
-    orgao: {
-      type: String,
-      required: true,
-      minLength: 1,
-      maxLength: 6,
-    },
+    orgao: [{ type: Schema.Types.ObjectId, ref: "Orgao" }],
+    caso_correlato: [{ type: Schema.Types.ObjectId, ref: "CorteIDHcaso" }],
     confirmEmail: {
       type: Boolean,
       default: true,

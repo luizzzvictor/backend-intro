@@ -5,12 +5,15 @@ import infoModel from "../models/info.model.js";
 import dataCasos from "../data/casos.json" assert { type: "json" };
 import dataReparacoes from "../data/reparacoes.json" assert { type: "json" };
 import dataInfos from "../data/infos.json" assert { type: "json" };
+import dataCasosEPalavras from "../data/filtroCasosPalavrasChave.json" assert {type: "json"};
+import AssuntoModel from "../models/assunto.model.js";
+import UserModel from "../models/user.model.js";
 
 const router = express.Router();
 
 router.get("/", async (request, response) => {
   try {
-    const casos = await casoCorteIDHModel.find().populate("medidas_reparacao");
+    const casos = await casoCorteIDHModel.find().populate("medidas_reparacao").populate("palavras_chave");
     console.log(casos.length, "Casos cadastrados!👁️");
 
     return response.status(200).json(casos);
@@ -25,7 +28,7 @@ router.get("/:id", async (request, response) => {
 
     const caso = await casoCorteIDHModel
       .findById(id)
-      .populate("medidas_reparacao");
+      .populate("medidas_reparacao").populate("palavras_chave");
 
     if (!caso) {
       return response.status(404).json("Caso não foi encontrado!");
@@ -69,6 +72,20 @@ router.post("/populateDB", async (req, res) => {
     const postAllCasos = await casoCorteIDHModel.insertMany(dataCasos);
     console.log(postAllCasos.length, `Casos criados! ✅✅✅`);
 
+    const palavrasChave = await AssuntoModel.find()
+
+    palavrasChave.map(async (p) => {
+
+      for (let i=0; i< dataCasosEPalavras.length; i++) {
+        if (dataCasosEPalavras[i].palavras_chave.includes(p.palavra_chave)) {
+          await casoCorteIDHModel.findOneAndUpdate(
+            { caso: dataCasosEPalavras[i].caso },
+          { $push: { palavras_chave: p._id } }
+          )
+        }
+      }
+    })
+
     const postingReparacoes = await reparacaoModel.insertMany(dataReparacoes);
     console.log(
       postingReparacoes.length,
@@ -101,6 +118,14 @@ router.post("/populateDB", async (req, res) => {
           });
           await infoModel.updateOne(eachInfo, { reparacao: result._id });
         });
+
+        //// MODIFICAR PARA INSERIR INFOS AUTOMÁTICAS DE ALGUM PRESTADOR
+      const usuariosInformantes = await UserModel.find();
+      let randomUser = Math.floor(Math.random() * usuariosInformantes.length);
+
+      await infoModel.updateOne(eachInfo, {
+        usuario_informante: usuariosInformantes[randomUser],
+      });
     });
 
     console.log(postingInfos.length, `Infos povoadas aleatoriamente! 👨‍👨‍👦`);
@@ -125,7 +150,7 @@ router.put("/edit/:id", async (request, response) => {
       { new: true, runValidators: true }
     );
     
-    console.log(`💡`,update.caso, `💡 editado com sucesso! 📝📝📝 `)
+    console.log(`💡`,update.caso, `💡 editado com sucesso! 📝 `)
 
 
     return response.status(200).json(update);
@@ -157,7 +182,7 @@ router.delete("/delete/:id", async (request, response) => {
     console.log(
       `💡`,
       deleteCaso.caso,
-      `💡 deletado! ❌❌❌`,
+      `💡 deletado! ❌`,
       "\n",
       reparacoesAssociadas.length,
       `reparações associadas deletadas ❌❌❌!`,

@@ -2,27 +2,32 @@ import { Schema, model } from "mongoose";
 
 const municipioSchema = new Schema(
   {
-    name: {
-      type: String,
+    SEQ_ORGAO: {
+      type: Number,
       required: true,
+      unique:true,
       minLength: 2,
       maxLength: 50,
     },
-    codigo: {
+    NOM_ORGAO: {
+      type: String,
+      // required: true,
+      minLength: 1,
+      maxLength: 150,
+    },
+    SEQ_MUNICIPIO: {
+      type: Number,
+      // required: true,
+      minLength: 2,
+      maxLength: 10,
+    },
+    UF: {
       type: String,
       required: true,
-      unique: true,
-      lowercase: true,
-      minLength: 1,
-      maxLength: 8,
-    },
-    uf: { 
-        type: String,
-        required: true,
-        uppercase: true,
-        minLength: 2,
-        maxLength: 2,
-    },
+      uppercase: true,
+      minLength: 2,
+      maxLength: 2,
+    }
   },
   {
     timestamps: true,
