@@ -5,6 +5,8 @@ async function attachCurrentUser(req, res, next) {
   try {
     const userData = req.auth; // -> _id, email, role
 
+    // console.log(userData)
+
     const user = await UserModel.findById(userData._id, { passwordHash: 0 });
 
     //confirmar se o user existe
