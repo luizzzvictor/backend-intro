@@ -62,7 +62,7 @@ userRoute.post("/sign-up", async (req, res) => {
       html: `
         <h1>Bem vindo ao nosso site.</h1>
         <p>Por favor, confirme seu email clicando no link abaixo.</p>
-        <a href=http://localhost:8080/user/activate-account/${newUser._id}>ATIVE SUA CONTA</a>
+        <a href=https://infoamericano.netlify.app/user/activate-account/${newUser._id}>ATIVE SUA CONTA</a>
       `,
     };
 
@@ -78,6 +78,60 @@ userRoute.post("/sign-up", async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json(error.errors);
+  }
+});
+
+
+//activate-account:/id
+userRoute.put("/activate-account/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const tUsuarios = await UserModel.findByIdAndUpdate(
+      { _id: id },
+      { confirmEmail: true },
+      { new: true, runValidators: true }
+    );
+
+    //configuro o corpo do email
+    const mailOptions = {
+      from: "turma91wd@hotmail.com", //nosso email
+      to: "turma91wd@hotmail.com", //o email do usuário
+      subject: "Aprovação de Usuário",
+      html: `
+        <h1>Novo usuário cadastrado.</h1>
+        <p>Por favor, confirme AUTORIZE o acesso do novo USUÁRIO, clicando no link abaixo.</p>
+        <a href=https://infoamericano.netlify.app/user/activate-acesson/${id}>AUTORIZE O USUÁRIO</a>
+      `,
+    };
+
+    //envio do email
+    await transporter.sendMail(mailOptions,(err,result)=>{
+      if (err) console.log("Erro envio e-mail: " + err)
+      console.log("Mensagem: " + result)
+    });
+
+    return res.status(200).json(tUsuarios);    
+  } catch (error) {
+    console.log("Erro ao gravar alteração de um Usuário");
+    return res.status(400).json({ msg: "Erro ao gravar alteração de um Usuário" });
+  }
+});
+
+
+//activate-account:/id
+userRoute.put("/activate-accesson/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const tUsuarios = await UserModel.findByIdAndUpdate(
+      { _id: id },
+      { aprovadoUser: true },
+      { new: true, runValidators: true }
+    );
+
+    return res.status(200).json(tUsuarios);    
+  } catch (error) {
+    console.log("Erro ao gravar alteração de um Usuário");
+    return res.status(400).json({ msg: "Erro ao gravar alteração de um Usuário" });
   }
 });
 
