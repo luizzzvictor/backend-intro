@@ -21,6 +21,21 @@ infoRouter.get("/", async (req, res) => {
   }
 });
 
+infoRouter.get("/getinfosprestadas", isAuth, attachCurrentUser, async (req, res) => {
+  try {
+    const infosPrestadas = await infoModel.find({usuario_informante: req.currentUser._id}).populate("reparacao", "reparacao")
+
+    console.log(infosPrestadas)
+
+    // console.log(infos.length, "Infos cadastradas!👁️");
+
+    return res.status(200).json(infosPrestadas );
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Algo está errado" });
+  }
+});
+
 infoRouter.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;

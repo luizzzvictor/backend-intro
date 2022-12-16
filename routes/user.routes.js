@@ -112,6 +112,17 @@ userRoute.get("/profileNV", isAuth, attachCurrentUser, async (req,res) => {
   }
 })
 
+userRoute.get("/profile", isAuth, attachCurrentUser, async (req,res) => {
+  try {  
+
+    return res.status(200).json(req.currentUser)
+
+  } catch(error) {
+    console.log (error)
+    return res.status(500).json(error.errors)
+  }
+})
+
 
 //insert
 userRoute.post("/insert", isAuth, isAdmin, attachCurrentUser, async (req, res) => {
