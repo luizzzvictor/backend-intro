@@ -84,7 +84,7 @@ userRoute.post("/sign-up", async (req, res) => {
 
 
 //activate-account:/id
-userRoute.put("/activate-account/:id", async (req, res) => {
+userRoute.get("/activate-account/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const tUsuarios = await UserModel.findByIdAndUpdate(
@@ -120,7 +120,7 @@ userRoute.put("/activate-account/:id", async (req, res) => {
 
 
 //activate-account:/id
-userRoute.put("/activate-accesson/:id", async (req, res) => {
+userRoute.get("/activate-accesson/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const tUsuarios = await UserModel.findByIdAndUpdate(
